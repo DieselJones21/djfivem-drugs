@@ -96,6 +96,13 @@ return {
         close = true,
         description = 'Soda used to mix lean',
     },
+    ['hard_candies'] = {
+        label = 'Hard Candies',
+        weight = 15,
+        stack = true,
+        close = true,
+        description = 'Jolly-style hard candies for mixing lean',
+    },
 
     -- Finished product
     ['pink_energy'] = {

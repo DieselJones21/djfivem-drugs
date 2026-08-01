@@ -132,6 +132,7 @@ Config.Drugs = {
             { item = 'ice', amount = 1 },
             { item = 'cups', amount = 1 },
             { item = 'sprite', amount = 1 },
+            { item = 'hard_candies', amount = 1 },
         },
         process = {
             label = 'Mix Lean',

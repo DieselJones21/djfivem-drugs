@@ -38,7 +38,7 @@ ensure djfivem-drugs
 | **Pink Energy** | 4 bench stations (crystals, solvent barrel, jar crates, caffeine barrel) | meth table | $550–$900 |
 | **Weed** | `prop_weed_01` field + store baggies | weed table | $80–$160 |
 | **Cocaine** | coca plants + acetone/baggies from stores | coke table | $250–$420 |
-| **Lean** | codeine bench + ice coolers + cups/sprite stores | tool bench | $140–$260 |
+| **Lean** | codeine bench + ice coolers + cups/sprite/hard candies stores | tool bench | $140–$260 |
 
 ## Props by location
 

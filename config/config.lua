@@ -87,6 +87,7 @@ Config.Stores = {
             { item = 'baggies', label = 'Grab Baggies', amount = 2, duration = 3500 },
             { item = 'cups', label = 'Grab Cups', amount = 2, duration = 3500 },
             { item = 'sprite', label = 'Grab Sprite', amount = 1, duration = 3500 },
+            { item = 'hard_candies', label = 'Grab Hard Candies', amount = 2, duration = 3500 },
         },
     },
     {
@@ -99,6 +100,7 @@ Config.Stores = {
             { item = 'baggies', label = 'Grab Baggies', amount = 2, duration = 3500 },
             { item = 'cups', label = 'Grab Cups', amount = 2, duration = 3500 },
             { item = 'sprite', label = 'Grab Sprite', amount = 1, duration = 3500 },
+            { item = 'hard_candies', label = 'Grab Hard Candies', amount = 2, duration = 3500 },
         },
     },
     {
@@ -111,6 +113,7 @@ Config.Stores = {
             { item = 'baggies', label = 'Grab Baggies', amount = 2, duration = 3500 },
             { item = 'cups', label = 'Grab Cups', amount = 2, duration = 3500 },
             { item = 'sprite', label = 'Grab Sprite', amount = 1, duration = 3500 },
+            { item = 'hard_candies', label = 'Grab Hard Candies', amount = 2, duration = 3500 },
             { item = 'acetone', label = 'Grab Acetone', amount = 1, duration = 4000 },
         },
     },

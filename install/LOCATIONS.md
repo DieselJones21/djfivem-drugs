@@ -34,7 +34,7 @@ Tune in `config/config.lua` and `config/drugs.lua`.
 |------|------|---------------|
 | Codeine bench | `prop_tool_bench02_ld` | `95.21, -230.84, 54.66` |
 | Ice | `prop_bar_cooler_03` | Grove / Strawberry / Sandy |
-| Cups + Sprite | store zones | same convenience stores |
+| Cups + Sprite + Hard Candies | store zones | same convenience stores |
 | Process bench | `prop_tool_bench02` | `1975.45, 3818.62, 33.44` |
 
 Set `blip.enabled = true` on any spot while placing your own coords.
