@@ -13,8 +13,7 @@ Config = {}
       3) Add the items to ox_inventory (see install/ox_inventory_items.lua)
 
     Harvest types:
-      - 'bench'  = spawn a prop + 3rd eye it (default for ingredient stations)
-      - 'prop'   = plant field (weed / coca) — multiple harvestable props
+      - 'bench'  = spawn a prop + 3rd eye it (all ingredient stations)
       Stores stay as world zones (no custom bench props).
 ]]
 
@@ -185,7 +184,6 @@ Config.Machines = {
 --[[
     World harvest spots
       type = 'bench' → spawn prop.model and 3rd-eye the bench
-      type = 'prop'  → plant field (weed/coca) — multiple plant models
 ]]
 Config.Harvest = {
     --------------------------------------------------
@@ -261,43 +259,45 @@ Config.Harvest = {
     },
 
     --------------------------------------------------
-    -- Weed plants (GTA weed props — no bench)
+    -- Weed buds bench
     --------------------------------------------------
     {
         id = 'weed_grove',
-        type = 'prop',
+        type = 'bench',
         item = 'weed_bud',
         label = 'Harvest Weed Buds',
         amount = { min = 5, max = 10 },
         duration = 6500,
         cooldown = 10,
-        model = `prop_weed_01`,
         coords = vec3(2223.65, 5577.18, 53.84),
         heading = 0.0,
-        count = 8,
-        radius = 6.0,
+        prop = {
+            model = `bkr_prop_weed_table_01a`,
+            heading = 0.0,
+        },
         anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
-        blip = { enabled = false, sprite = 469, color = 2, label = 'Weed Field' },
+        blip = { enabled = false, sprite = 469, color = 2, label = 'Weed Buds' },
     },
 
     --------------------------------------------------
-    -- Cocaine leaf plants (no bench)
+    -- Coca leaves bench
     --------------------------------------------------
     {
         id = 'coca_field',
-        type = 'prop',
+        type = 'bench',
         item = 'coca_leaves',
         label = 'Pick Coca Leaves',
         amount = { min = 5, max = 10 },
         duration = 6000,
         cooldown = 10,
-        model = `prop_plant_01a`,
         coords = vec3(2218.12, 5614.45, 54.72),
         heading = 90.0,
-        count = 7,
-        radius = 5.5,
+        prop = {
+            model = `prop_tool_bench02`,
+            heading = 90.0,
+        },
         anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
-        blip = { enabled = false, sprite = 501, color = 0, label = 'Coca Field' },
+        blip = { enabled = false, sprite = 501, color = 0, label = 'Coca Leaves' },
     },
 
     --------------------------------------------------
