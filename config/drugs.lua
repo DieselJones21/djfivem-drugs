@@ -2,10 +2,8 @@
     Add new drugs here. Everything else (process bench, sell prices, recipes)
     is driven from this table — no client/server code changes needed.
 
-    Required fields:
-      label, item, ingredients, process, sell
-
-    process.prop is required for a visible processing bench.
+    Default craft rule used below:
+      5 of each ingredient → 7 finished product
 ]]
 
 Config.Drugs = {
@@ -17,10 +15,10 @@ Config.Drugs = {
         item = 'pink_energy',
         description = 'High-octane pink stimulant brew',
         ingredients = {
-            { item = 'pink_crystal_shards', amount = 2 },
-            { item = 'pink_energy_solvent', amount = 1 },
-            { item = 'chug_jars', amount = 1 },
-            { item = 'caffeine_powder', amount = 2 },
+            { item = 'pink_crystal_shards', amount = 5 },
+            { item = 'pink_energy_solvent', amount = 5 },
+            { item = 'chug_jars', amount = 5 },
+            { item = 'caffeine_powder', amount = 5 },
         },
         process = {
             label = 'Mix Pink Energy',
@@ -35,7 +33,7 @@ Config.Drugs = {
                 dict = 'anim@amb@business@coc@coc_unpack_cut@',
                 clip = 'fullcut_cycle_v6_cokecutter',
             },
-            output = { item = 'pink_energy', amount = 1 },
+            output = { item = 'pink_energy', amount = 7 },
             blip = { enabled = false, sprite = 499, color = 8, label = 'Pink Energy Lab' },
         },
         sell = {
@@ -55,8 +53,8 @@ Config.Drugs = {
         item = 'weed_bag',
         description = 'Street bag of weed',
         ingredients = {
-            { item = 'weed_bud', amount = 3 },
-            { item = 'baggies', amount = 1 },
+            { item = 'weed_bud', amount = 5 },
+            { item = 'baggies', amount = 5 },
         },
         process = {
             label = 'Bag Weed',
@@ -71,7 +69,7 @@ Config.Drugs = {
                 dict = 'mini@repair',
                 clip = 'fixing_a_ped',
             },
-            output = { item = 'weed_bag', amount = 1 },
+            output = { item = 'weed_bag', amount = 7 },
             blip = { enabled = false, sprite = 469, color = 2, label = 'Weed Bench' },
         },
         sell = {
@@ -91,9 +89,9 @@ Config.Drugs = {
         item = 'cocaine_bag',
         description = 'Processed cocaine ready to move',
         ingredients = {
-            { item = 'coca_leaves', amount = 4 },
-            { item = 'acetone', amount = 1 },
-            { item = 'baggies', amount = 1 },
+            { item = 'coca_leaves', amount = 5 },
+            { item = 'acetone', amount = 5 },
+            { item = 'baggies', amount = 5 },
         },
         process = {
             label = 'Cook Cocaine',
@@ -108,7 +106,7 @@ Config.Drugs = {
                 dict = 'anim@amb@business@coc@coc_unpack_cut@',
                 clip = 'fullcut_cycle_v6_cokecutter',
             },
-            output = { item = 'cocaine_bag', amount = 1 },
+            output = { item = 'cocaine_bag', amount = 7 },
             blip = { enabled = false, sprite = 501, color = 0, label = 'Cocaine Table' },
         },
         sell = {
@@ -128,11 +126,11 @@ Config.Drugs = {
         item = 'lean_cup',
         description = 'Mixed lean ready to sell',
         ingredients = {
-            { item = 'codeine', amount = 1 },
-            { item = 'ice', amount = 1 },
-            { item = 'cups', amount = 1 },
-            { item = 'sprite', amount = 1 },
-            { item = 'hard_candies', amount = 1 },
+            { item = 'codeine', amount = 5 },
+            { item = 'ice', amount = 5 },
+            { item = 'cups', amount = 5 },
+            { item = 'sprite', amount = 5 },
+            { item = 'hard_candies', amount = 5 },
         },
         process = {
             label = 'Mix Lean',
@@ -147,7 +145,7 @@ Config.Drugs = {
                 dict = 'mini@repair',
                 clip = 'fixing_a_ped',
             },
-            output = { item = 'lean_cup', amount = 1 },
+            output = { item = 'lean_cup', amount = 7 },
             blip = { enabled = false, sprite = 499, color = 27, label = 'Lean Bench' },
         },
         sell = {
@@ -167,8 +165,8 @@ Config.Drugs = {
         label = 'Meth Bag',
         item = 'meth_bag',
         ingredients = {
-            { item = 'pseudo', amount = 2 },
-            { item = 'baggies', amount = 1 },
+            { item = 'pseudo', amount = 5 },
+            { item = 'baggies', amount = 5 },
         },
         process = {
             label = 'Cook Meth',
@@ -179,7 +177,7 @@ Config.Drugs = {
                 model = `bkr_prop_meth_table01a`,
                 heading = 0.0,
             },
-            output = { item = 'meth_bag', amount = 1 },
+            output = { item = 'meth_bag', amount = 7 },
         },
         sell = {
             enabled = true,

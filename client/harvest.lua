@@ -106,7 +106,7 @@ local function setupStores()
                 distance = Config.InteractDistance,
                 onSelect = function()
                     local key = store.id .. ':' .. entry.item
-                    if onCooldown(key, entry.cooldown or 15) then return end
+                    if onCooldown(key, entry.cooldown or Config.IngredientCooldown or 10) then return end
                     if not Client.Progress(entry.label or 'Taking supplies', entry.duration or 3500, entry.anim) then
                         Client.Notify('Cancelled', 'error')
                         cooldowns[key] = nil

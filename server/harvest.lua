@@ -9,7 +9,7 @@ RegisterNetEvent('djdrugs:server:harvest', function(spotId, entityKey)
     end
 
     local cdKey = entityKey or spot.id
-    local cooling, left = Server.OnCooldown(Server.harvestCooldown, src, cdKey, spot.cooldown or 20)
+    local cooling, left = Server.OnCooldown(Server.harvestCooldown, src, cdKey, spot.cooldown or Config.IngredientCooldown or 10)
     if cooling then
         Server.Notify(src, ('Wait %s seconds'):format(left), 'error')
         return
@@ -50,13 +50,13 @@ RegisterNetEvent('djdrugs:server:storeTake', function(storeId, itemName)
     if not entry then return end
 
     local cdKey = store.id .. ':' .. entry.item
-    local cooling, left = Server.OnCooldown(Server.storeCooldown, src, cdKey, entry.cooldown or 15)
+    local cooling, left = Server.OnCooldown(Server.storeCooldown, src, cdKey, entry.cooldown or Config.IngredientCooldown or 10)
     if cooling then
         Server.Notify(src, ('Wait %s seconds'):format(left), 'error')
         return
     end
 
-    local amount = entry.amount or 1
+    local amount = Server.AmountFromConfig(entry.amount or Config.IngredientAmount)
     if entry.paid and entry.price and entry.price > 0 then
         if Server.GetMoney(src) < entry.price then
             Server.ClearCooldown(Server.storeCooldown, src, cdKey)
@@ -94,7 +94,7 @@ RegisterNetEvent('djdrugs:server:machine', function(machineId)
         return
     end
 
-    local cooling, left = Server.OnCooldown(Server.machineCooldown, src, machine.id, machine.cooldown or 20)
+    local cooling, left = Server.OnCooldown(Server.machineCooldown, src, machine.id, machine.cooldown or Config.IngredientCooldown or 10)
     if cooling then
         Server.Notify(src, ('Wait %s seconds'):format(left), 'error')
         return
