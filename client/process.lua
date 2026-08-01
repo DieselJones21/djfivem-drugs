@@ -32,30 +32,38 @@ function Process.Init()
     for drugId, drug in pairs(Config.Drugs) do
         local p = drug.process
         if p and p.coords then
+            Client.AddBlip(p.coords, p.blip)
+
+            local options = {
+                {
+                    name = 'djdrugs_process_' .. drugId,
+                    icon = 'fa-solid fa-flask',
+                    label = p.label or ('Process ' .. drug.label),
+                    distance = Config.InteractDistance,
+                    onSelect = function()
+                        processDrug(drugId)
+                    end,
+                },
+            }
+
+            local spawned = nil
             if p.prop and p.prop.model then
+                local heading = p.prop.heading or p.heading or 0.0
                 local pos = p.coords + (p.prop.offset or vec3(0.0, 0.0, 0.0))
-                Client.SpawnProp(p.prop.model, pos, p.prop.heading or p.heading or 0.0)
+                spawned = Client.SpawnTargetProp(p.prop.model, pos, heading, options, true)
             end
 
-            local zoneId = exports.ox_target:addBoxZone({
-                coords = p.coords,
-                size = p.size or vec3(1.6, 1.6, 2.0),
-                rotation = p.rotation or p.heading or 0.0,
-                debug = Config.Debug,
-                options = {
-                    {
-                        name = 'djdrugs_process_' .. drugId,
-                        icon = 'fa-solid fa-flask',
-                        label = p.label or ('Process ' .. drug.label),
-                        distance = Config.InteractDistance,
-                        onSelect = function()
-                            processDrug(drugId)
-                        end,
-                    },
-                },
-            })
-            Client.processZones[#Client.processZones + 1] = zoneId
-            Client.AddBlip(p.coords, p.blip)
+            -- Fallback zone if no prop / prop failed
+            if not spawned then
+                local zoneId = exports.ox_target:addBoxZone({
+                    coords = p.coords,
+                    size = p.size or vec3(1.6, 1.6, 2.0),
+                    rotation = p.rotation or p.heading or 0.0,
+                    debug = Config.Debug,
+                    options = options,
+                })
+                Client.processZones[#Client.processZones + 1] = zoneId
+            end
         end
     end
 end

@@ -5,21 +5,7 @@
     Required fields:
       label, item, ingredients, process, sell
 
-    ingredients = {
-        { item = 'item_name', amount = 1 },
-    }
-
-    process = {
-        coords, heading, label, duration,
-        output = { item = '...', amount = 1 },
-        optional: prop, anim, size, rotation, blip
-    }
-
-    sell = {
-        enabled = true,
-        minPrice / maxPrice  -- per unit
-        minQty / maxQty      -- buyer request range
-    }
+    process.prop is required for a visible processing bench.
 ]]
 
 Config.Drugs = {
@@ -38,14 +24,11 @@ Config.Drugs = {
         },
         process = {
             label = 'Mix Pink Energy',
-            coords = vec3(1391.92, 3605.94, 38.94), -- Sandy motel / lab-ish
+            coords = vec3(1391.92, 3605.94, 38.94),
             heading = 200.0,
-            size = vec3(1.6, 1.6, 2.0),
-            rotation = 200.0,
             duration = 14000,
             prop = {
-                model = `prop_tool_bench02`,
-                offset = vec3(0.0, 0.0, 0.0),
+                model = `bkr_prop_meth_table01a`,
                 heading = 200.0,
             },
             anim = {
@@ -79,12 +62,9 @@ Config.Drugs = {
             label = 'Bag Weed',
             coords = vec3(2329.12, 2571.45, 46.68),
             heading = 0.0,
-            size = vec3(1.6, 1.6, 2.0),
-            rotation = 0.0,
             duration = 9000,
             prop = {
                 model = `bkr_prop_weed_table_01a`,
-                offset = vec3(0.0, 0.0, 0.0),
                 heading = 0.0,
             },
             anim = {
@@ -119,12 +99,9 @@ Config.Drugs = {
             label = 'Cook Cocaine',
             coords = vec3(2433.58, 4969.12, 42.35),
             heading = 45.0,
-            size = vec3(1.6, 1.6, 2.0),
-            rotation = 45.0,
             duration = 12000,
             prop = {
                 model = `bkr_prop_coke_table01a`,
-                offset = vec3(0.0, 0.0, 0.0),
                 heading = 45.0,
             },
             anim = {
@@ -160,12 +137,9 @@ Config.Drugs = {
             label = 'Mix Lean',
             coords = vec3(1975.45, 3818.62, 33.44),
             heading = 300.0,
-            size = vec3(1.6, 1.6, 2.0),
-            rotation = 300.0,
             duration = 10000,
             prop = {
-                model = `prop_tool_bench02_ld`,
-                offset = vec3(0.0, 0.0, 0.0),
+                model = `prop_tool_bench02`,
                 heading = 300.0,
             },
             anim = {
@@ -199,9 +173,11 @@ Config.Drugs = {
             label = 'Cook Meth',
             coords = vec3(0.0, 0.0, 0.0),
             heading = 0.0,
-            size = vec3(1.6, 1.6, 2.0),
-            rotation = 0.0,
             duration = 15000,
+            prop = {
+                model = `bkr_prop_meth_table01a`,
+                heading = 0.0,
+            },
             output = { item = 'meth_bag', amount = 1 },
         },
         sell = {

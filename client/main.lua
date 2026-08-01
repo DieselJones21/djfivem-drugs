@@ -1,7 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
-
 Client = {
-    QBCore = QBCore,
     spawnedProps = {},
     harvestZones = {},
     processZones = {},
@@ -59,26 +56,55 @@ end
 
 function Client.LoadModel(model)
     local hash = type(model) == 'number' and model or joaat(model)
-    if not IsModelValid(hash) then return false end
+    if not IsModelInCdimage(hash) and not IsModelValid(hash) then
+        Utils.Debug('invalid model', tostring(model))
+        return false
+    end
     RequestModel(hash)
-    local timeout = GetGameTimer() + 5000
+    local timeout = GetGameTimer() + 7000
     while not HasModelLoaded(hash) do
-        if GetGameTimer() > timeout then return false end
+        if GetGameTimer() > timeout then
+            Utils.Debug('model load timeout', tostring(model))
+            return false
+        end
         Wait(10)
     end
     return hash
 end
 
-function Client.SpawnProp(model, coords, heading)
+---@param model number|string
+---@param coords vector3
+---@param heading number|nil
+---@param placeOnGround boolean|nil
+function Client.SpawnProp(model, coords, heading, placeOnGround)
     local hash = Client.LoadModel(model)
     if not hash then return nil end
+
     local obj = CreateObject(hash, coords.x, coords.y, coords.z, false, false, false)
     SetEntityHeading(obj, heading or 0.0)
-    PlaceObjectOnGroundProperly(obj)
+
+    if placeOnGround ~= false then
+        PlaceObjectOnGroundProperly(obj)
+    end
+
     FreezeEntityPosition(obj, true)
     SetEntityAsMissionEntity(obj, true, true)
+    SetEntityCollision(obj, true, true)
     SetModelAsNoLongerNeeded(hash)
+
     Client.spawnedProps[#Client.spawnedProps + 1] = obj
+    return obj
+end
+
+---@param model number|string
+---@param coords vector3
+---@param heading number|nil
+---@param options table
+---@param placeOnGround boolean|nil
+function Client.SpawnTargetProp(model, coords, heading, options, placeOnGround)
+    local obj = Client.SpawnProp(model, coords, heading, placeOnGround)
+    if not obj then return nil end
+    exports.ox_target:addLocalEntity(obj, options)
     return obj
 end
 
@@ -113,5 +139,5 @@ CreateThread(function()
     Harvest.Init()
     Process.Init()
     Sell.Init()
-    Utils.Debug('client ready')
+    Utils.Debug('client ready (qbx)')
 end)

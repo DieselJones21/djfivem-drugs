@@ -1,41 +1,40 @@
-# Default world locations
+# Default world locations + props
 
-Tune these in `config/config.lua` and `config/drugs.lua`.
+Tune in `config/config.lua` and `config/drugs.lua`.
 
-## Pink Energy ingredients
+## Pink Energy
 
-| Item | Area | Approx coords |
+| Step | Prop | Approx coords |
 |------|------|---------------|
-| Pink Crystal Shards | Quarry | `2954.12, 2787.45, 41.48` |
-| Pink Energy Solvent | Humane Labs | `3536.85, 3661.97, 28.12` |
-| Chug Jars | Docks warehouse | `1210.45, -3102.88, 5.85` |
-| Caffeine Powder | Power plant | `2748.21, 1510.94, 24.50` |
-| **Process bench** | Sandy Shores | `1391.92, 3605.94, 38.94` |
+| Crystal shards bench | `prop_tool_bench02` | `2954.12, 2787.45, 41.48` |
+| Solvent barrel | `prop_barrel_exp_01a` | `3536.85, 3661.97, 28.12` |
+| Chug jar crates | `prop_box_wood02a` | `1210.45, -3102.88, 5.85` |
+| Caffeine barrel | `prop_barrel_02b` | `2748.21, 1510.94, 24.50` |
+| Process table | `bkr_prop_meth_table01a` | `1391.92, 3605.94, 38.94` |
 
 ## Weed
 
-| Item | Area | Approx coords |
+| Step | Prop | Approx coords |
 |------|------|---------------|
-| Weed Buds (`prop_weed_01` field) | Grapeseed hills | `2223.65, 5577.18, 53.84` |
-| Baggies | Convenience stores | Grove / Strawberry / Sandy |
-| **Process bench** | Countryside | `2329.12, 2571.45, 46.68` |
+| Weed buds | `prop_weed_01` field (x8) | `2223.65, 5577.18, 53.84` |
+| Baggies | store zone (no prop) | Grove / Strawberry / Sandy |
+| Process table | `bkr_prop_weed_table_01a` | `2329.12, 2571.45, 46.68` |
 
 ## Cocaine
 
-| Item | Area | Approx coords |
+| Step | Prop | Approx coords |
 |------|------|---------------|
-| Coca Leaves | Near weed field | `2218.12, 5614.45, 54.72` |
-| Acetone | Hardware / Sandy store | `46.66, -1749.72, 29.63` |
-| Baggies | Convenience stores | same as weed |
-| **Process table** | Grapeseed house | `2433.58, 4969.12, 42.35` |
+| Coca leaves | `prop_plant_01a` field (x7) | `2218.12, 5614.45, 54.72` |
+| Acetone / baggies | store zones | hardware + convenience |
+| Process table | `bkr_prop_coke_table01a` | `2433.58, 4969.12, 42.35` |
 
 ## Lean
 
-| Item | Area | Approx coords |
+| Step | Prop | Approx coords |
 |------|------|---------------|
-| Codeine | Medical / clinic | `95.21, -230.84, 54.66` |
-| Ice | Ice machines | Grove / Strawberry stores |
-| Cups + Sprite | Convenience stores | same stores |
-| **Process bench** | Sandy Shores | `1975.45, 3818.62, 33.44` |
+| Codeine bench | `prop_tool_bench02_ld` | `95.21, -230.84, 54.66` |
+| Ice | `prop_bar_cooler_03` | Grove / Strawberry / Sandy |
+| Cups + Sprite | store zones | same convenience stores |
+| Process bench | `prop_tool_bench02` | `1975.45, 3818.62, 33.44` |
 
-Enable blips temporarily by setting `blip.enabled = true` on any spot while you place your own coords.
+Set `blip.enabled = true` on any spot while placing your own coords.

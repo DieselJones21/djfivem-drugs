@@ -4,12 +4,13 @@ lua54 'yes'
 
 name 'djfivem-drugs'
 author 'DieselJones21'
-description 'Config-driven harvest → process → /trap sell drug economy'
-version '1.0.0'
+description 'Config-driven harvest → process → /trap sell drug economy (QBX + ox_inventory)'
+version '1.1.0'
 
 shared_scripts {
     '@ox_lib/init.lua',
     'shared/utils.lua',
+    'shared/bridge.lua',
     'config/config.lua',
     'config/drugs.lua',
 }
@@ -32,5 +33,5 @@ dependencies {
     'ox_lib',
     'ox_target',
     'ox_inventory',
-    'qb-core',
+    'qbx_core',
 }

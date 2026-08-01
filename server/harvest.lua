@@ -58,15 +58,16 @@ RegisterNetEvent('djdrugs:server:storeTake', function(storeId, itemName)
 
     local amount = entry.amount or 1
     if entry.paid and entry.price and entry.price > 0 then
-        local player = Server.GetPlayer(src)
-        if not player then return end
-        local money = player.Functions.GetMoney(Config.MoneyType)
-        if money < entry.price then
+        if Server.GetMoney(src) < entry.price then
             Server.ClearCooldown(Server.storeCooldown, src, cdKey)
             Server.Notify(src, 'Not enough money', 'error')
             return
         end
-        player.Functions.RemoveMoney(Config.MoneyType, entry.price, 'djdrugs-store')
+        if not Server.RemoveMoney(src, entry.price) then
+            Server.ClearCooldown(Server.storeCooldown, src, cdKey)
+            Server.Notify(src, 'Payment failed', 'error')
+            return
+        end
     end
 
     if not Server.CanCarry(src, entry.item, amount) then

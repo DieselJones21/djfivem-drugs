@@ -1,8 +1,8 @@
 Config = {}
 
 --[[
-    Framework stack (default):
-      - qb-core
+    Framework stack:
+      - qbx_core
       - ox_lib
       - ox_target (3rd eye)
       - ox_inventory
@@ -11,6 +11,11 @@ Config = {}
       1) Add an entry under Config.Drugs in config/drugs.lua
       2) Add harvest / store / machine spots that grant its ingredients
       3) Add the items to ox_inventory (see install/ox_inventory_items.lua)
+
+    Harvest types:
+      - 'bench'  = spawn a prop + 3rd eye it (default for ingredient stations)
+      - 'prop'   = plant field (weed / coca) — multiple harvestable props
+      Stores stay as world zones (no custom bench props).
 ]]
 
 Config.Debug = false
@@ -69,6 +74,7 @@ Config.Trap = {
 }
 
 -- Convenience / supply store pickups (baggies, cups, sprite, acetone, etc.)
+-- These use existing store interiors — no spawned bench props.
 -- Set paid = true + price to charge cash; otherwise free grab.
 Config.Stores = {
     {
@@ -120,7 +126,7 @@ Config.Stores = {
     },
 }
 
--- Ice machines (lean)
+-- Ice machines (lean) — spawned machine props + 3rd eye
 Config.Machines = {
     {
         id = 'ice_machine_1',
@@ -130,8 +136,11 @@ Config.Machines = {
         duration = 4000,
         cooldown = 20,
         coords = vec3(-53.12, -1756.90, 29.44),
-        size = vec3(1.2, 1.2, 2.0),
-        rotation = 50.0,
+        heading = 50.0,
+        prop = {
+            model = `prop_bar_cooler_03`,
+            heading = 50.0,
+        },
         anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer' },
     },
     {
@@ -142,74 +151,111 @@ Config.Machines = {
         duration = 4000,
         cooldown = 20,
         coords = vec3(28.40, -1349.20, 29.50),
-        size = vec3(1.2, 1.2, 2.0),
-        rotation = 0.0,
+        heading = 0.0,
+        prop = {
+            model = `prop_bar_cooler_03`,
+            heading = 0.0,
+        },
+        anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer' },
+    },
+    {
+        id = 'ice_machine_3',
+        label = 'Take Ice',
+        item = 'ice',
+        amount = { min = 1, max = 2 },
+        duration = 4000,
+        cooldown = 20,
+        coords = vec3(1955.80, 3740.20, 32.34),
+        heading = 300.0,
+        prop = {
+            model = `prop_bar_cooler_03`,
+            heading = 300.0,
+        },
         anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer' },
     },
 }
 
--- World harvest spots (plants, crystals, leaves, codeine, solvents, etc.)
--- type = 'spot' uses a zone; type = 'prop' spawns harvestable props
+--[[
+    World harvest spots
+      type = 'bench' → spawn prop.model and 3rd-eye the bench
+      type = 'prop'  → plant field (weed/coca) — multiple plant models
+]]
 Config.Harvest = {
-    -- Pink Energy ingredients
+    --------------------------------------------------
+    -- Pink Energy ingredient benches
+    --------------------------------------------------
     {
         id = 'pink_crystal_field',
-        type = 'spot',
+        type = 'bench',
         item = 'pink_crystal_shards',
         label = 'Harvest Pink Crystal Shards',
         amount = { min = 1, max = 2 },
         duration = 7000,
         cooldown = 30,
-        coords = vec3(2954.12, 2787.45, 41.48), -- quarry / rocky area
-        size = vec3(2.0, 2.0, 2.0),
-        rotation = 0.0,
+        coords = vec3(2954.12, 2787.45, 41.48),
+        heading = 0.0,
+        prop = {
+            model = `prop_tool_bench02`,
+            heading = 0.0,
+        },
         anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
         blip = { enabled = false, sprite = 501, color = 8, label = 'Pink Crystals' },
     },
     {
         id = 'pink_solvent_lab',
-        type = 'spot',
+        type = 'bench',
         item = 'pink_energy_solvent',
         label = 'Siphon Pink Energy Solvent',
         amount = { min = 1, max = 1 },
         duration = 8000,
         cooldown = 35,
-        coords = vec3(3536.85, 3661.97, 28.12), -- Humane Labs vicinity
-        size = vec3(1.8, 1.8, 2.0),
-        rotation = 170.0,
+        coords = vec3(3536.85, 3661.97, 28.12),
+        heading = 170.0,
+        prop = {
+            model = `prop_barrel_exp_01a`,
+            heading = 170.0,
+        },
         anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
         blip = { enabled = false, sprite = 499, color = 8, label = 'Pink Solvent' },
     },
     {
         id = 'chug_jars_warehouse',
-        type = 'spot',
+        type = 'bench',
         item = 'chug_jars',
         label = 'Collect Chug Jars',
         amount = { min = 1, max = 2 },
         duration = 6000,
         cooldown = 25,
-        coords = vec3(1210.45, -3102.88, 5.85), -- docks / warehouse
-        size = vec3(1.8, 1.8, 2.0),
-        rotation = 0.0,
+        coords = vec3(1210.45, -3102.88, 5.85),
+        heading = 0.0,
+        prop = {
+            model = `prop_box_wood02a`,
+            heading = 0.0,
+        },
         anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
         blip = { enabled = false, sprite = 478, color = 8, label = 'Chug Jars' },
     },
     {
         id = 'caffeine_powder_plant',
-        type = 'spot',
+        type = 'bench',
         item = 'caffeine_powder',
         label = 'Scoop Caffeine Powder',
         amount = { min = 1, max = 2 },
         duration = 6500,
         cooldown = 25,
-        coords = vec3(2748.21, 1510.94, 24.50), -- power plant / industrial
-        size = vec3(1.8, 1.8, 2.0),
-        rotation = 70.0,
+        coords = vec3(2748.21, 1510.94, 24.50),
+        heading = 70.0,
+        prop = {
+            model = `prop_barrel_02b`,
+            heading = 70.0,
+        },
         anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
         blip = { enabled = false, sprite = 499, color = 8, label = 'Caffeine Powder' },
     },
 
-    -- Weed plants (GTA weed props)
+    --------------------------------------------------
+    -- Weed plants (GTA weed props — no bench)
+    --------------------------------------------------
     {
         id = 'weed_grove',
         type = 'prop',
@@ -219,7 +265,6 @@ Config.Harvest = {
         duration = 6500,
         cooldown = 40,
         model = `prop_weed_01`,
-        -- Center of the grow area; props spawn around it
         coords = vec3(2223.65, 5577.18, 53.84),
         heading = 0.0,
         count = 8,
@@ -228,7 +273,9 @@ Config.Harvest = {
         blip = { enabled = false, sprite = 469, color = 2, label = 'Weed Field' },
     },
 
-    -- Cocaine leaves
+    --------------------------------------------------
+    -- Cocaine leaf plants (no bench)
+    --------------------------------------------------
     {
         id = 'coca_field',
         type = 'prop',
@@ -246,18 +293,23 @@ Config.Harvest = {
         blip = { enabled = false, sprite = 501, color = 0, label = 'Coca Field' },
     },
 
-    -- Lean codeine harvest
+    --------------------------------------------------
+    -- Lean codeine bench
+    --------------------------------------------------
     {
         id = 'codeine_pharmacy',
-        type = 'spot',
+        type = 'bench',
         item = 'codeine',
         label = 'Steal Codeine',
         amount = { min = 1, max = 2 },
         duration = 7500,
         cooldown = 40,
-        coords = vec3(95.21, -230.84, 54.66), -- clinic / medical area
-        size = vec3(1.6, 1.6, 2.0),
-        rotation = 340.0,
+        coords = vec3(95.21, -230.84, 54.66),
+        heading = 340.0,
+        prop = {
+            model = `prop_tool_bench02_ld`,
+            heading = 340.0,
+        },
         anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer' },
         blip = { enabled = false, sprite = 403, color = 27, label = 'Codeine' },
     },

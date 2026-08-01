@@ -1,17 +1,10 @@
-local QBCore = exports['qb-core']:GetCoreObject()
-
 Server = {
-    QBCore = QBCore,
     harvestCooldown = {},
     storeCooldown = {},
     machineCooldown = {},
     processCooldown = {},
     offers = {},
 }
-
-function Server.GetPlayer(src)
-    return QBCore.Functions.GetPlayer(src)
-end
 
 function Server.Notify(src, description, nType)
     TriggerClientEvent('ox_lib:notify', src, {
@@ -22,27 +15,33 @@ function Server.Notify(src, description, nType)
 end
 
 function Server.ItemCount(src, item)
-    local count = exports.ox_inventory:Search(src, 'count', item)
-    return count or 0
+    return Bridge.ItemCount(src, item)
 end
 
 function Server.CanCarry(src, item, amount)
-    return exports.ox_inventory:CanCarryItem(src, item, amount)
+    return Bridge.CanCarry(src, item, amount)
 end
 
 function Server.AddItem(src, item, amount, metadata)
-    return exports.ox_inventory:AddItem(src, item, amount, metadata)
+    return Bridge.AddItem(src, item, amount, metadata)
 end
 
 function Server.RemoveItem(src, item, amount)
-    return exports.ox_inventory:RemoveItem(src, item, amount)
+    return Bridge.RemoveItem(src, item, amount)
 end
 
 function Server.AddMoney(src, amount)
-    local player = Server.GetPlayer(src)
-    if not player then return false end
-    player.Functions.AddMoney(Config.MoneyType, amount, 'djdrugs-sale')
-    return true
+    local ok = Bridge.AddMoney(src, Config.MoneyType, amount, 'djdrugs-sale')
+    return ok ~= false
+end
+
+function Server.RemoveMoney(src, amount)
+    local ok = Bridge.RemoveMoney(src, Config.MoneyType, amount, 'djdrugs-store')
+    return ok ~= false
+end
+
+function Server.GetMoney(src)
+    return Bridge.GetMoney(src, Config.MoneyType) or 0
 end
 
 function Server.OnCooldown(bucket, src, key, seconds)
@@ -65,9 +64,9 @@ end
 function Server.GetOnDutyPolice()
     if not Config.Police.enabled then return 999 end
     local count = 0
-    local players = QBCore.Functions.GetQBPlayers()
+    local players = Bridge.GetPlayers()
     for _, player in pairs(players) do
-        local job = player.PlayerData.job
+        local job = player.PlayerData and player.PlayerData.job
         if job and job.onduty then
             for i = 1, #Config.Police.jobs do
                 if job.name == Config.Police.jobs[i] then
@@ -131,5 +130,5 @@ end)
 
 CreateThread(function()
     math.randomseed(os.time())
-    Utils.Debug('server ready — drugs loaded:', tostring(#Utils.GetSellableDrugs()))
+    Utils.Debug('server ready (qbx) — sellable drugs:', tostring(#Utils.GetSellableDrugs()))
 end)

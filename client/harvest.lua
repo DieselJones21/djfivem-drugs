@@ -26,28 +26,44 @@ local function doHarvest(spot, entityKey)
     TriggerServerEvent('djdrugs:server:harvest', spot.id, entityKey)
 end
 
-local function setupSpot(spot)
-    local zoneId = exports.ox_target:addBoxZone({
-        coords = spot.coords,
-        size = spot.size or vec3(1.5, 1.5, 2.0),
-        rotation = spot.rotation or spot.heading or 0.0,
-        debug = Config.Debug,
-        options = {
-            {
-                name = 'djdrugs_harvest_' .. spot.id,
-                icon = 'fa-solid fa-hand',
-                label = spot.label,
-                distance = Config.InteractDistance,
-                onSelect = function()
-                    doHarvest(spot)
-                end,
-            },
-        },
-    })
-    Client.harvestZones[#Client.harvestZones + 1] = zoneId
+--- Spawn a single interactable harvest bench/prop
+local function setupBench(spot)
     Client.AddBlip(spot.coords, spot.blip)
+
+    local propData = spot.prop
+    if not propData or not propData.model then
+        Utils.Debug('harvest bench missing prop', spot.id)
+        return
+    end
+
+    local heading = propData.heading or spot.heading or spot.rotation or 0.0
+    local options = {
+        {
+            name = 'djdrugs_harvest_' .. spot.id,
+            icon = 'fa-solid fa-hand',
+            label = spot.label,
+            distance = Config.InteractDistance,
+            onSelect = function()
+                doHarvest(spot)
+            end,
+        },
+    }
+
+    local obj = Client.SpawnTargetProp(propData.model, spot.coords, heading, options, true)
+    if not obj then
+        -- Fallback zone if prop fails to load
+        local zoneId = exports.ox_target:addBoxZone({
+            coords = spot.coords,
+            size = spot.size or vec3(1.6, 1.6, 2.0),
+            rotation = heading,
+            debug = Config.Debug,
+            options = options,
+        })
+        Client.harvestZones[#Client.harvestZones + 1] = zoneId
+    end
 end
 
+--- Plant fields (weed / coca)
 local function setupPropField(spot)
     Client.AddBlip(spot.coords, spot.blip)
 
@@ -62,34 +78,22 @@ local function setupPropField(spot)
         local z = spot.coords.z
         local heading = (spot.heading or 0.0) + (i * 35.0)
 
-        local obj = Client.SpawnProp(spot.model, vec3(x, y, z), heading)
-        if obj then
-            local entityKey = ('%s_%s'):format(spot.id, i)
-            exports.ox_target:addLocalEntity(obj, {
-                {
-                    name = 'djdrugs_prop_' .. entityKey,
-                    icon = 'fa-solid fa-seedling',
-                    label = spot.label,
-                    distance = Config.InteractDistance,
-                    onSelect = function()
-                        doHarvest(spot, entityKey)
-                    end,
-                },
-            })
-        end
+        local entityKey = ('%s_%s'):format(spot.id, i)
+        Client.SpawnTargetProp(spot.model, vec3(x, y, z), heading, {
+            {
+                name = 'djdrugs_prop_' .. entityKey,
+                icon = 'fa-solid fa-seedling',
+                label = spot.label,
+                distance = Config.InteractDistance,
+                onSelect = function()
+                    doHarvest(spot, entityKey)
+                end,
+            },
+        }, true)
     end
 end
 
-function Harvest.Init()
-    for i = 1, #Config.Harvest do
-        local spot = Config.Harvest[i]
-        if spot.type == 'prop' then
-            setupPropField(spot)
-        else
-            setupSpot(spot)
-        end
-    end
-
+local function setupStores()
     for i = 1, #Config.Stores do
         local store = Config.Stores[i]
         local options = {}
@@ -122,32 +126,66 @@ function Harvest.Init()
         })
         Client.storeZones[#Client.storeZones + 1] = zoneId
     end
+end
 
+local function setupMachines()
     for i = 1, #Config.Machines do
         local machine = Config.Machines[i]
-        local zoneId = exports.ox_target:addBoxZone({
-            coords = machine.coords,
-            size = machine.size or vec3(1.2, 1.2, 2.0),
-            rotation = machine.rotation or 0.0,
-            debug = Config.Debug,
-            options = {
-                {
-                    name = 'djdrugs_machine_' .. machine.id,
-                    icon = 'fa-solid fa-snowflake',
-                    label = machine.label,
-                    distance = Config.InteractDistance,
-                    onSelect = function()
-                        if onCooldown(machine.id, machine.cooldown or 20) then return end
-                        if not Client.Progress(machine.label, machine.duration or 4000, machine.anim) then
-                            Client.Notify('Cancelled', 'error')
-                            cooldowns[machine.id] = nil
-                            return
-                        end
-                        TriggerServerEvent('djdrugs:server:machine', machine.id)
-                    end,
-                },
+        local options = {
+            {
+                name = 'djdrugs_machine_' .. machine.id,
+                icon = 'fa-solid fa-snowflake',
+                label = machine.label,
+                distance = Config.InteractDistance,
+                onSelect = function()
+                    if onCooldown(machine.id, machine.cooldown or 20) then return end
+                    if not Client.Progress(machine.label, machine.duration or 4000, machine.anim) then
+                        Client.Notify('Cancelled', 'error')
+                        cooldowns[machine.id] = nil
+                        return
+                    end
+                    TriggerServerEvent('djdrugs:server:machine', machine.id)
+                end,
             },
-        })
-        Client.machineZones[#Client.machineZones + 1] = zoneId
+        }
+
+        if machine.prop and machine.prop.model then
+            local heading = machine.prop.heading or machine.heading or 0.0
+            local obj = Client.SpawnTargetProp(machine.prop.model, machine.coords, heading, options, true)
+            if not obj then
+                local zoneId = exports.ox_target:addBoxZone({
+                    coords = machine.coords,
+                    size = machine.size or vec3(1.2, 1.2, 2.0),
+                    rotation = heading,
+                    debug = Config.Debug,
+                    options = options,
+                })
+                Client.machineZones[#Client.machineZones + 1] = zoneId
+            end
+        else
+            local zoneId = exports.ox_target:addBoxZone({
+                coords = machine.coords,
+                size = machine.size or vec3(1.2, 1.2, 2.0),
+                rotation = machine.rotation or machine.heading or 0.0,
+                debug = Config.Debug,
+                options = options,
+            })
+            Client.machineZones[#Client.machineZones + 1] = zoneId
+        end
     end
+end
+
+function Harvest.Init()
+    for i = 1, #Config.Harvest do
+        local spot = Config.Harvest[i]
+        if spot.type == 'prop' then
+            setupPropField(spot)
+        else
+            -- 'bench' (and legacy 'spot')
+            setupBench(spot)
+        end
+    end
+
+    setupStores()
+    setupMachines()
 end
