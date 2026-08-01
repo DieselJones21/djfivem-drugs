@@ -13,8 +13,7 @@ Config = {}
       3) Add the items to ox_inventory (see install/ox_inventory_items.lua)
 
     Harvest types:
-      - 'bench'  = spawn a prop + 3rd eye it (default for ingredient stations)
-      - 'prop'   = plant field (weed / coca) — multiple harvestable props
+      - 'bench'  = spawn a prop + 3rd eye it (all ingredient stations)
       Stores stay as world zones (no custom bench props).
 ]]
 
@@ -76,6 +75,10 @@ Config.Trap = {
 -- Convenience / supply store pickups (baggies, cups, sprite, acetone, etc.)
 -- These use existing store interiors — no spawned bench props.
 -- Set paid = true + price to charge cash; otherwise free grab.
+-- Shared ingredient pickup defaults
+Config.IngredientAmount = { min = 5, max = 10 }
+Config.IngredientCooldown = 10
+
 Config.Stores = {
     {
         id = 'store_grove',
@@ -84,10 +87,10 @@ Config.Stores = {
         size = vec3(1.4, 1.4, 2.0),
         rotation = 50.0,
         items = {
-            { item = 'baggies', label = 'Grab Baggies', amount = 2, duration = 3500 },
-            { item = 'cups', label = 'Grab Cups', amount = 2, duration = 3500 },
-            { item = 'sprite', label = 'Grab Sprite', amount = 1, duration = 3500 },
-            { item = 'hard_candies', label = 'Grab Hard Candies', amount = 2, duration = 3500 },
+            { item = 'baggies', label = 'Grab Baggies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+            { item = 'cups', label = 'Grab Cups', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+            { item = 'sprite', label = 'Grab Sprite', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+            { item = 'hard_candies', label = 'Grab Hard Candies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
         },
     },
     {
@@ -97,10 +100,10 @@ Config.Stores = {
         size = vec3(1.4, 1.4, 2.0),
         rotation = 0.0,
         items = {
-            { item = 'baggies', label = 'Grab Baggies', amount = 2, duration = 3500 },
-            { item = 'cups', label = 'Grab Cups', amount = 2, duration = 3500 },
-            { item = 'sprite', label = 'Grab Sprite', amount = 1, duration = 3500 },
-            { item = 'hard_candies', label = 'Grab Hard Candies', amount = 2, duration = 3500 },
+            { item = 'baggies', label = 'Grab Baggies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+            { item = 'cups', label = 'Grab Cups', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+            { item = 'sprite', label = 'Grab Sprite', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+            { item = 'hard_candies', label = 'Grab Hard Candies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
         },
     },
     {
@@ -110,11 +113,11 @@ Config.Stores = {
         size = vec3(1.4, 1.4, 2.0),
         rotation = 300.0,
         items = {
-            { item = 'baggies', label = 'Grab Baggies', amount = 2, duration = 3500 },
-            { item = 'cups', label = 'Grab Cups', amount = 2, duration = 3500 },
-            { item = 'sprite', label = 'Grab Sprite', amount = 1, duration = 3500 },
-            { item = 'hard_candies', label = 'Grab Hard Candies', amount = 2, duration = 3500 },
-            { item = 'acetone', label = 'Grab Acetone', amount = 1, duration = 4000 },
+            { item = 'baggies', label = 'Grab Baggies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+            { item = 'cups', label = 'Grab Cups', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+            { item = 'sprite', label = 'Grab Sprite', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+            { item = 'hard_candies', label = 'Grab Hard Candies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+            { item = 'acetone', label = 'Grab Acetone', amount = { min = 5, max = 10 }, cooldown = 10, duration = 4000 },
         },
     },
     {
@@ -124,7 +127,7 @@ Config.Stores = {
         size = vec3(1.4, 1.4, 2.0),
         rotation = 50.0,
         items = {
-            { item = 'acetone', label = 'Grab Acetone', amount = 1, duration = 4000 },
+            { item = 'acetone', label = 'Grab Acetone', amount = { min = 5, max = 10 }, cooldown = 10, duration = 4000 },
         },
     },
 }
@@ -135,9 +138,9 @@ Config.Machines = {
         id = 'ice_machine_1',
         label = 'Take Ice',
         item = 'ice',
-        amount = { min = 1, max = 2 },
+        amount = { min = 5, max = 10 },
         duration = 4000,
-        cooldown = 20,
+        cooldown = 10,
         coords = vec3(-53.12, -1756.90, 29.44),
         heading = 50.0,
         prop = {
@@ -150,9 +153,9 @@ Config.Machines = {
         id = 'ice_machine_2',
         label = 'Take Ice',
         item = 'ice',
-        amount = { min = 1, max = 2 },
+        amount = { min = 5, max = 10 },
         duration = 4000,
-        cooldown = 20,
+        cooldown = 10,
         coords = vec3(28.40, -1349.20, 29.50),
         heading = 0.0,
         prop = {
@@ -165,9 +168,9 @@ Config.Machines = {
         id = 'ice_machine_3',
         label = 'Take Ice',
         item = 'ice',
-        amount = { min = 1, max = 2 },
+        amount = { min = 5, max = 10 },
         duration = 4000,
-        cooldown = 20,
+        cooldown = 10,
         coords = vec3(1955.80, 3740.20, 32.34),
         heading = 300.0,
         prop = {
@@ -181,7 +184,6 @@ Config.Machines = {
 --[[
     World harvest spots
       type = 'bench' → spawn prop.model and 3rd-eye the bench
-      type = 'prop'  → plant field (weed/coca) — multiple plant models
 ]]
 Config.Harvest = {
     --------------------------------------------------
@@ -192,9 +194,9 @@ Config.Harvest = {
         type = 'bench',
         item = 'pink_crystal_shards',
         label = 'Harvest Pink Crystal Shards',
-        amount = { min = 1, max = 2 },
+        amount = { min = 5, max = 10 },
         duration = 7000,
-        cooldown = 30,
+        cooldown = 10,
         coords = vec3(2954.12, 2787.45, 41.48),
         heading = 0.0,
         prop = {
@@ -209,9 +211,9 @@ Config.Harvest = {
         type = 'bench',
         item = 'pink_energy_solvent',
         label = 'Siphon Pink Energy Solvent',
-        amount = { min = 1, max = 1 },
+        amount = { min = 5, max = 10 },
         duration = 8000,
-        cooldown = 35,
+        cooldown = 10,
         coords = vec3(3536.85, 3661.97, 28.12),
         heading = 170.0,
         prop = {
@@ -226,9 +228,9 @@ Config.Harvest = {
         type = 'bench',
         item = 'chug_jars',
         label = 'Collect Chug Jars',
-        amount = { min = 1, max = 2 },
+        amount = { min = 5, max = 10 },
         duration = 6000,
-        cooldown = 25,
+        cooldown = 10,
         coords = vec3(1210.45, -3102.88, 5.85),
         heading = 0.0,
         prop = {
@@ -243,9 +245,9 @@ Config.Harvest = {
         type = 'bench',
         item = 'caffeine_powder',
         label = 'Scoop Caffeine Powder',
-        amount = { min = 1, max = 2 },
+        amount = { min = 5, max = 10 },
         duration = 6500,
-        cooldown = 25,
+        cooldown = 10,
         coords = vec3(2748.21, 1510.94, 24.50),
         heading = 70.0,
         prop = {
@@ -257,43 +259,45 @@ Config.Harvest = {
     },
 
     --------------------------------------------------
-    -- Weed plants (GTA weed props — no bench)
+    -- Weed buds bench
     --------------------------------------------------
     {
         id = 'weed_grove',
-        type = 'prop',
+        type = 'bench',
         item = 'weed_bud',
         label = 'Harvest Weed Buds',
-        amount = { min = 1, max = 3 },
+        amount = { min = 5, max = 10 },
         duration = 6500,
-        cooldown = 40,
-        model = `prop_weed_01`,
+        cooldown = 10,
         coords = vec3(2223.65, 5577.18, 53.84),
         heading = 0.0,
-        count = 8,
-        radius = 6.0,
+        prop = {
+            model = `bkr_prop_weed_table_01a`,
+            heading = 0.0,
+        },
         anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
-        blip = { enabled = false, sprite = 469, color = 2, label = 'Weed Field' },
+        blip = { enabled = false, sprite = 469, color = 2, label = 'Weed Buds' },
     },
 
     --------------------------------------------------
-    -- Cocaine leaf plants (no bench)
+    -- Coca leaves bench
     --------------------------------------------------
     {
         id = 'coca_field',
-        type = 'prop',
+        type = 'bench',
         item = 'coca_leaves',
         label = 'Pick Coca Leaves',
-        amount = { min = 1, max = 3 },
+        amount = { min = 5, max = 10 },
         duration = 6000,
-        cooldown = 35,
-        model = `prop_plant_01a`,
+        cooldown = 10,
         coords = vec3(2218.12, 5614.45, 54.72),
         heading = 90.0,
-        count = 7,
-        radius = 5.5,
+        prop = {
+            model = `prop_tool_bench02`,
+            heading = 90.0,
+        },
         anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
-        blip = { enabled = false, sprite = 501, color = 0, label = 'Coca Field' },
+        blip = { enabled = false, sprite = 501, color = 0, label = 'Coca Leaves' },
     },
 
     --------------------------------------------------
@@ -304,9 +308,9 @@ Config.Harvest = {
         type = 'bench',
         item = 'codeine',
         label = 'Steal Codeine',
-        amount = { min = 1, max = 2 },
+        amount = { min = 5, max = 10 },
         duration = 7500,
-        cooldown = 40,
+        cooldown = 10,
         coords = vec3(95.21, -230.84, 54.66),
         heading = 340.0,
         prop = {
