@@ -70,6 +70,34 @@ Config.Trap = {
         scale = 0.7,
         label = 'Trap Mode',
     },
+    -- Ask for higher prices: success varies, not always a good sale
+    haggle = {
+        enabled = true,
+        maxAttempts = 2, -- how many times you can push one buyer
+        -- Opening offer leans toward the lower end of minPrice-maxPrice (0.0 = min, 1.0 = max)
+        openingBias = 0.35,
+        -- Ask tiers shown in the deal menu
+        asks = {
+            {
+                id = 'soft',
+                label = 'Ask a little more',
+                -- Target bump toward maxPrice (percent of the gap from current → max)
+                bump = { min = 0.25, max = 0.45 },
+                successChance = 50,   -- full asked bump
+                counterChance = 30,   -- smaller bump instead
+                walkAwayChance = 10,  -- buyer leaves
+                -- remaining % = refuse, keep current offer
+            },
+            {
+                id = 'hard',
+                label = 'Push for top dollar',
+                bump = { min = 0.70, max = 1.00 },
+                successChance = 20,
+                counterChance = 25,
+                walkAwayChance = 35,
+            },
+        },
+    },
 }
 
 -- Convenience / supply store pickups (baggies, cups, sprite, acetone, etc.)
@@ -197,7 +225,7 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 7000,
         cooldown = 10,
-        coords = vec3(2954.12, 2787.45, 41.48),
+        coords = vec3(1243.59, -425.83, 67.92),
         heading = 0.0,
         prop = {
             model = `prop_tool_bench02`,
@@ -214,7 +242,7 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 8000,
         cooldown = 10,
-        coords = vec3(3536.85, 3661.97, 28.12),
+        coords = vec3(955.0, -194.81, 78.3),
         heading = 170.0,
         prop = {
             model = `prop_barrel_exp_01a`,
@@ -231,7 +259,7 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 6000,
         cooldown = 10,
-        coords = vec3(1210.45, -3102.88, 5.85),
+        coords = vec3(1123.41, -652.92, 55.73),
         heading = 0.0,
         prop = {
             model = `prop_box_wood02a`,
@@ -248,7 +276,7 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 6500,
         cooldown = 10,
-        coords = vec3(2748.21, 1510.94, 24.50),
+        coords = vec3(756.17, -672.71, 27.73),
         heading = 70.0,
         prop = {
             model = `prop_barrel_02b`,
@@ -269,7 +297,7 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 6500,
         cooldown = 10,
-        coords = vec3(2223.65, 5577.18, 53.84),
+        coords = vec3(99.71, -1978.33, 19.76),
         heading = 0.0,
         prop = {
             model = `bkr_prop_weed_table_01a`,
@@ -290,7 +318,7 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 6000,
         cooldown = 10,
-        coords = vec3(2218.12, 5614.45, 54.72),
+        coords = vec3(-1485.49, -909.42, 9.02),
         heading = 90.0,
         prop = {
             model = `prop_tool_bench02`,
@@ -311,7 +339,7 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 7500,
         cooldown = 10,
-        coords = vec3(95.21, -230.84, 54.66),
+        coords = vec3(-620.23, 323.26, 81.26),
         heading = 340.0,
         prop = {
             model = `prop_tool_bench02_ld`,
