@@ -4,6 +4,7 @@ Trap = {
     buyer = nil,
     blip = nil,
     offer = nil,
+    dealing = false,
 }
 
 local function loadAnimDict(dict)
@@ -30,6 +31,7 @@ local function deleteBuyer()
         end)
     end
     Trap.offer = nil
+    Trap.dealing = false
 end
 
 function Trap.Stop(silent)
@@ -73,6 +75,110 @@ local function randomSpawnCoords(origin)
     return vec3(x, y, z)
 end
 
+local function playDealAnim()
+    local anim = Config.Trap.dealAnim
+    if not anim or not Trap.buyer or not DoesEntityExist(Trap.buyer) then return end
+    if loadAnimDict(anim.dict) then
+        TaskPlayAnim(PlayerPedId(), anim.dict, anim.clip, 8.0, -8.0, anim.duration or 2500, anim.flag or 49, 0, false, false, false)
+        TaskPlayAnim(Trap.buyer, anim.dict, anim.clip, 8.0, -8.0, anim.duration or 2500, anim.flag or 49, 0, false, false, false)
+        Wait(anim.duration or 2500)
+        ClearPedTasks(PlayerPedId())
+    end
+end
+
+local function finishSale()
+    local offer = Trap.offer
+    if not offer then return end
+
+    playDealAnim()
+
+    local ok, message = lib.callback.await('djdrugs:server:completeSale', false, offer.token)
+    if ok then
+        Client.Notify(message or 'Sale complete', 'success')
+    else
+        Client.Notify(message or 'Sale failed', 'error')
+    end
+
+    deleteBuyer()
+end
+
+local function openDealMenu()
+    local offer = Trap.offer
+    if not offer or not Trap.buyer or not DoesEntityExist(Trap.buyer) then return end
+
+    local haggle = Config.Trap.haggle or {}
+    local canHaggle = offer.haggleEnabled
+        and (offer.attempts or 0) < (offer.maxAttempts or 0)
+        and offer.priceEach < offer.maxPrice
+
+    local options = {
+        {
+            title = ('Accept $%s total'):format(offer.total),
+            description = ('%sx %s @ $%s each (range $%s–$%s)'):format(
+                offer.quantity, offer.label, offer.priceEach, offer.minPrice, offer.maxPrice
+            ),
+            icon = 'fa-solid fa-handshake',
+            onSelect = function()
+                finishSale()
+            end,
+        },
+    }
+
+    if canHaggle and haggle.asks then
+        for i = 1, #haggle.asks do
+            local ask = haggle.asks[i]
+            options[#options + 1] = {
+                title = ask.label,
+                description = ('Chance varies — attempts left: %s'):format(
+                    (offer.maxAttempts or 0) - (offer.attempts or 0)
+                ),
+                icon = 'fa-solid fa-arrow-trend-up',
+                onSelect = function()
+                    local result = lib.callback.await('djdrugs:server:haggleOffer', false, offer.token, ask.id)
+                    if not result then
+                        Client.Notify('No response', 'error')
+                        deleteBuyer()
+                        return
+                    end
+
+                    if result.outcome == 'walk' or result.outcome == 'expired' then
+                        Client.Notify(result.message or 'Buyer left', 'error')
+                        deleteBuyer()
+                        return
+                    end
+
+                    if result.offer then
+                        Trap.offer = result.offer
+                    end
+
+                    Client.Notify(result.message or 'Buyer responded', result.outcome == 'success' and 'success' or 'inform')
+
+                    if Trap.offer and Trap.buyer and DoesEntityExist(Trap.buyer) then
+                        openDealMenu()
+                    end
+                end,
+            }
+        end
+    end
+
+    options[#options + 1] = {
+        title = 'Decline / walk away',
+        description = 'Send the buyer off',
+        icon = 'fa-solid fa-xmark',
+        onSelect = function()
+            Client.Notify('You waved the buyer off', 'inform')
+            deleteBuyer()
+        end,
+    }
+
+    lib.registerContext({
+        id = 'djdrugs_deal_menu',
+        title = 'Street Buyer',
+        options = options,
+    })
+    lib.showContext('djdrugs_deal_menu')
+end
+
 local function spawnBuyer()
     if not Trap.active or Trap.buyer then return end
 
@@ -113,7 +219,7 @@ local function spawnBuyer()
         {
             name = 'djdrugs_sell_buyer',
             icon = 'fa-solid fa-comments-dollar',
-            label = ('Sell %s'):format(offer.label),
+            label = ('Deal %s'):format(offer.label),
             distance = 2.2,
             onSelect = function()
                 Sell.HandleBuyer()
@@ -152,48 +258,16 @@ local function spawnBuyer()
 end
 
 function Sell.HandleBuyer()
+    if Trap.dealing then return end
     if not Trap.active or not Trap.buyer or not Trap.offer then return end
     if not DoesEntityExist(Trap.buyer) then
         deleteBuyer()
         return
     end
 
-    local offer = Trap.offer
-    local confirm = lib.alertDialog({
-        header = 'Street Buyer',
-        content = ('Yo, you got **%sx %s**? I\'ll pay **$%s** total ($%s each).'):format(
-            offer.quantity,
-            offer.label,
-            offer.total,
-            offer.priceEach
-        ),
-        centered = true,
-        cancel = true,
-        labels = { confirm = 'Sell', cancel = 'Decline' },
-    })
-
-    if confirm ~= 'confirm' then
-        Client.Notify('You waved the buyer off', 'inform')
-        deleteBuyer()
-        return
-    end
-
-    local anim = Config.Trap.dealAnim
-    if anim and loadAnimDict(anim.dict) then
-        TaskPlayAnim(PlayerPedId(), anim.dict, anim.clip, 8.0, -8.0, anim.duration or 2500, anim.flag or 49, 0, false, false, false)
-        TaskPlayAnim(Trap.buyer, anim.dict, anim.clip, 8.0, -8.0, anim.duration or 2500, anim.flag or 49, 0, false, false, false)
-        Wait(anim.duration or 2500)
-        ClearPedTasks(PlayerPedId())
-    end
-
-    local ok, message = lib.callback.await('djdrugs:server:completeSale', false, offer.token)
-    if ok then
-        Client.Notify(message or 'Sale complete', 'success')
-    else
-        Client.Notify(message or 'Sale failed', 'error')
-    end
-
-    deleteBuyer()
+    Trap.dealing = true
+    openDealMenu()
+    Trap.dealing = false
 end
 
 function Sell.Init()

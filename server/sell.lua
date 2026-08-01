@@ -19,6 +19,40 @@ local function playerSellableStock(src)
     return stock
 end
 
+local function biasedPrice(minPrice, maxPrice, bias)
+    bias = math.max(0.0, math.min(1.0, bias or 0.5))
+    local span = maxPrice - minPrice
+    -- Random around the bias point so opens aren't always the same
+    local roll = math.max(0.0, math.min(1.0, bias + (math.random() - 0.5) * 0.35))
+    return math.floor(minPrice + (span * roll) + 0.5)
+end
+
+local function findAsk(askId)
+    local asks = Config.Trap.haggle and Config.Trap.haggle.asks or {}
+    for i = 1, #asks do
+        if asks[i].id == askId then
+            return asks[i]
+        end
+    end
+end
+
+local function offerPayload(offer)
+    return {
+        token = offer.token,
+        drugId = offer.drugId,
+        item = offer.item,
+        label = offer.label,
+        quantity = offer.quantity,
+        priceEach = offer.priceEach,
+        total = offer.total,
+        minPrice = offer.minPrice,
+        maxPrice = offer.maxPrice,
+        attempts = offer.attempts,
+        maxAttempts = offer.maxAttempts,
+        haggleEnabled = offer.haggleEnabled,
+    }
+end
+
 lib.callback.register('djdrugs:server:canTrap', function(source)
     if Config.Police.enabled then
         local cops = Server.GetOnDutyPolice()
@@ -63,7 +97,9 @@ lib.callback.register('djdrugs:server:createOffer', function(source)
     if maxAsk < 1 then return nil end
 
     local quantity = math.random(minAsk, maxAsk)
-    local priceEach = math.random(sell.minPrice, sell.maxPrice)
+    local haggle = Config.Trap.haggle or {}
+    local priceEach = biasedPrice(sell.minPrice, sell.maxPrice, haggle.openingBias or 0.35)
+    priceEach = math.max(sell.minPrice, math.min(sell.maxPrice, priceEach))
     local total = priceEach * quantity
     local token = newToken()
 
@@ -75,17 +111,97 @@ lib.callback.register('djdrugs:server:createOffer', function(source)
         quantity = quantity,
         priceEach = priceEach,
         total = total,
+        minPrice = sell.minPrice,
+        maxPrice = sell.maxPrice,
+        attempts = 0,
+        maxAttempts = haggle.maxAttempts or 2,
+        haggleEnabled = haggle.enabled ~= false,
         expires = os.time() + 90,
     }
 
+    return offerPayload(Server.offers[source])
+end)
+
+lib.callback.register('djdrugs:server:haggleOffer', function(source, token, askId)
+    local offer = Server.offers[source]
+    if not offer or offer.token ~= token then
+        return { ok = false, outcome = 'expired', message = 'Offer expired' }
+    end
+
+    if offer.expires < os.time() then
+        Server.offers[source] = nil
+        return { ok = false, outcome = 'expired', message = 'Offer expired' }
+    end
+
+    if not offer.haggleEnabled then
+        return { ok = false, outcome = 'disabled', message = 'Buyer will not negotiate', offer = offerPayload(offer) }
+    end
+
+    if offer.attempts >= offer.maxAttempts then
+        return { ok = false, outcome = 'max', message = 'Buyer is done negotiating', offer = offerPayload(offer) }
+    end
+
+    if offer.priceEach >= offer.maxPrice then
+        return { ok = false, outcome = 'maxed', message = 'Already at top dollar for this buyer', offer = offerPayload(offer) }
+    end
+
+    local ask = findAsk(askId)
+    if not ask then
+        return { ok = false, outcome = 'invalid', message = 'Invalid ask', offer = offerPayload(offer) }
+    end
+
+    offer.attempts = offer.attempts + 1
+
+    local roll = math.random(1, 100)
+    local success = ask.successChance or 0
+    local counter = ask.counterChance or 0
+    local walk = ask.walkAwayChance or 0
+
+    local gap = offer.maxPrice - offer.priceEach
+    local bumpMin = ask.bump and ask.bump.min or 0.25
+    local bumpMax = ask.bump and ask.bump.max or 0.45
+    local bumpFactor = Utils.RandomFloat(bumpMin, bumpMax)
+
+    if roll <= success then
+        local bump = math.max(1, math.floor(gap * bumpFactor + 0.5))
+        offer.priceEach = math.min(offer.maxPrice, offer.priceEach + bump)
+        offer.total = offer.priceEach * offer.quantity
+        return {
+            ok = true,
+            outcome = 'success',
+            message = ('Buyer bites — $%s each now'):format(offer.priceEach),
+            offer = offerPayload(offer),
+        }
+    end
+
+    roll = roll - success
+    if roll <= counter then
+        local bump = math.max(1, math.floor(gap * (bumpFactor * 0.45) + 0.5))
+        offer.priceEach = math.min(offer.maxPrice, offer.priceEach + bump)
+        offer.total = offer.priceEach * offer.quantity
+        return {
+            ok = true,
+            outcome = 'counter',
+            message = ('Buyer meets you halfway — $%s each'):format(offer.priceEach),
+            offer = offerPayload(offer),
+        }
+    end
+
+    roll = roll - counter
+    if roll <= walk then
+        Server.offers[source] = nil
+        return {
+            ok = false,
+            outcome = 'walk',
+            message = 'Buyer got mad and walked off',
+        }
+    end
+
     return {
-        token = token,
-        drugId = pick.id,
-        item = pick.drug.item,
-        label = pick.drug.label,
-        quantity = quantity,
-        priceEach = priceEach,
-        total = total,
+        ok = true,
+        outcome = 'refuse',
+        message = ('Buyer says no — still offering $%s each'):format(offer.priceEach),
+        offer = offerPayload(offer),
     }
 end)
 
@@ -119,10 +235,9 @@ lib.callback.register('djdrugs:server:completeSale', function(source, token)
 
     if Config.Police.enabled and (Config.Police.alertChance or 0) > 0 then
         if math.random(1, 100) <= Config.Police.alertChance then
-            -- Hook your dispatch here if desired
             Utils.Debug('police alert rolled for', source)
         end
     end
 
-    return true, ('Sold %sx %s for $%s'):format(offer.quantity, offer.label, offer.total)
+    return true, ('Sold %sx %s for $%s ($%s each)'):format(offer.quantity, offer.label, offer.total, offer.priceEach)
 end)

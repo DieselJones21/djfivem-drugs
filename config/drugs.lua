@@ -22,7 +22,7 @@ Config.Drugs = {
         },
         process = {
             label = 'Mix Pink Energy',
-            coords = vec3(1391.92, 3605.94, 38.94),
+            coords = vec3(880.8, -959.84, 26.86),
             heading = 200.0,
             duration = 14000,
             prop = {
@@ -58,7 +58,7 @@ Config.Drugs = {
         },
         process = {
             label = 'Bag Weed',
-            coords = vec3(2329.12, 2571.45, 46.68),
+            coords = vec3(-417.21, -2176.31, 9.32),
             heading = 0.0,
             duration = 9000,
             prop = {
@@ -95,7 +95,7 @@ Config.Drugs = {
         },
         process = {
             label = 'Cook Cocaine',
-            coords = vec3(2433.58, 4969.12, 42.35),
+            coords = vec3(-1277.08, -1357.38, 3.3),
             heading = 45.0,
             duration = 12000,
             prop = {
@@ -134,7 +134,7 @@ Config.Drugs = {
         },
         process = {
             label = 'Mix Lean',
-            coords = vec3(1975.45, 3818.62, 33.44),
+            coords = vec3(-427.11, 292.68, 82.23),
             heading = 300.0,
             duration = 10000,
             prop = {
