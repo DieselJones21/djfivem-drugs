@@ -11,7 +11,8 @@ Built for **QBX (`qbx_core`) + ox_lib + ox_target + ox_inventory**.
 - Store supply grabs (baggies, cups, sprite, acetone, hard candies) — no custom props
 - Ice **machine props** for lean
 - Processing **bench/table props** for every drug
-- `/trap` street selling: NPC runs up, 3rd-eye, random qty + price
+- `/trap` street selling: NPC runs up, 3rd-eye, random qty + opening price
+- Ask for higher prices with chance-based success (buyer may counter, refuse, or walk)
 
 ## Dependencies
 
