@@ -103,6 +103,14 @@ Config.Trap = {
 -- Convenience / supply store pickups (baggies, cups, sprite, acetone, etc.)
 -- These use existing store interiors — no spawned bench props.
 -- Set paid = true + price to charge cash; otherwise free grab.
+-- Global usable drug effects (per-drug effects live under Config.Drugs[].effects)
+Config.UseEffects = true
+Config.EffectCooldown = 12 -- seconds between uses
+-- Optional stress relieve event used by many QB/QBX HUDs (set nil to disable)
+Config.StressEvent = 'hud:server:RelieveStress'
+-- Optional stress gain event (set if your HUD supports it; cocaine uses this)
+Config.StressGainEvent = nil
+
 -- Shared ingredient pickup defaults
 Config.IngredientAmount = { min = 5, max = 10 }
 Config.IngredientCooldown = 10
@@ -347,5 +355,60 @@ Config.Harvest = {
         },
         anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer' },
         blip = { enabled = false, sprite = 403, color = 27, label = 'Codeine' },
+    },
+
+    --------------------------------------------------
+    -- Honda Pills ingredient benches (placeholder coords — edit to fit your map)
+    --------------------------------------------------
+    {
+        id = 'honda_capsules',
+        type = 'bench',
+        item = 'honda_pill_capsules',
+        label = 'Collect Honda Pill Capsules',
+        amount = { min = 5, max = 10 },
+        duration = 6500,
+        cooldown = 10,
+        coords = vec3(353.45, -1415.80, 32.50),
+        heading = 50.0,
+        prop = {
+            model = `prop_box_wood02a`,
+            heading = 50.0,
+        },
+        anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+        blip = { enabled = false, sprite = 51, color = 46, label = 'Honda Capsules' },
+    },
+    {
+        id = 'honda_formula',
+        type = 'bench',
+        item = 'honda_formula',
+        label = 'Scoop Honda Formula',
+        amount = { min = 5, max = 10 },
+        duration = 7000,
+        cooldown = 10,
+        coords = vec3(144.20, -2203.85, 4.70),
+        heading = 180.0,
+        prop = {
+            model = `prop_barrel_02b`,
+            heading = 180.0,
+        },
+        anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
+        blip = { enabled = false, sprite = 51, color = 46, label = 'Honda Formula' },
+    },
+    {
+        id = 'honda_extract',
+        type = 'bench',
+        item = 'honda_extract',
+        label = 'Extract Honda Concentrate',
+        amount = { min = 5, max = 10 },
+        duration = 7500,
+        cooldown = 10,
+        coords = vec3(-1164.55, -2036.90, 13.15),
+        heading = 315.0,
+        prop = {
+            model = `prop_barrel_exp_01a`,
+            heading = 315.0,
+        },
+        anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
+        blip = { enabled = false, sprite = 51, color = 46, label = 'Honda Extract' },
     },
 }

@@ -13,6 +13,7 @@ Built for **QBX (`qbx_core`) + ox_lib + ox_target + ox_inventory**.
 - Processing **bench/table props** for every drug
 - `/trap` street selling: NPC runs up, 3rd-eye, random qty + opening price
 - Ask for higher prices with chance-based success (buyer may counter, refuse, or walk)
+- **Usable drug effects** when consuming finished product (screen FX, speed, armor, stress, etc.)
 
 ## Dependencies
 

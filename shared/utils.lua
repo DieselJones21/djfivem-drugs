@@ -17,6 +17,14 @@ function Utils.GetDrug(drugId)
     return Config.Drugs[drugId]
 end
 
+function Utils.GetDrugByItem(itemName)
+    for id, drug in pairs(Config.Drugs) do
+        if drug.item == itemName then
+            return id, drug
+        end
+    end
+end
+
 function Utils.GetSellableDrugs()
     local list = {}
     for id, drug in pairs(Config.Drugs) do

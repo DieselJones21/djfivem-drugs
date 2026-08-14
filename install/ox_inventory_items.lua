@@ -2,6 +2,8 @@
     Copy these entries into ox_inventory/data/items.lua
     (or merge into your items file). Icons are optional — add images
     under ox_inventory/web/images matching each item name.
+
+    Finished drugs use the client export for usable effects.
 ]]
 
 return {
@@ -104,13 +106,39 @@ return {
         description = 'Jolly-style hard candies for mixing lean',
     },
 
-    -- Finished product
+    -- Ingredients: Honda Pills
+    ['honda_pill_capsules'] = {
+        label = 'Honda Pill Capsules',
+        weight = 20,
+        stack = true,
+        close = true,
+        description = 'Empty capsules for pressing Honda pills',
+    },
+    ['honda_formula'] = {
+        label = 'Honda Formula',
+        weight = 40,
+        stack = true,
+        close = true,
+        description = 'Chemical formula powder for Honda pills',
+    },
+    ['honda_extract'] = {
+        label = 'Honda Extract',
+        weight = 35,
+        stack = true,
+        close = true,
+        description = 'Concentrated extract used in Honda pills',
+    },
+
+    -- Finished product (usable = effects via djfivem-drugs export)
     ['pink_energy'] = {
         label = 'Pink Energy',
         weight = 150,
         stack = true,
         close = true,
         description = 'Premium street stimulant — highest demand',
+        client = {
+            export = 'djfivem-drugs.useDrug',
+        },
     },
     ['weed_bag'] = {
         label = 'Bagged Weed',
@@ -118,6 +146,9 @@ return {
         stack = true,
         close = true,
         description = 'A bag of weed ready to sell',
+        client = {
+            export = 'djfivem-drugs.useDrug',
+        },
     },
     ['cocaine_bag'] = {
         label = 'Cocaine Bag',
@@ -125,6 +156,9 @@ return {
         stack = true,
         close = true,
         description = 'Processed cocaine packaged for sale',
+        client = {
+            export = 'djfivem-drugs.useDrug',
+        },
     },
     ['lean_cup'] = {
         label = 'Lean Cup',
@@ -132,5 +166,18 @@ return {
         stack = true,
         close = true,
         description = 'A mixed cup of lean ready to move',
+        client = {
+            export = 'djfivem-drugs.useDrug',
+        },
+    },
+    ['honda_pills'] = {
+        label = 'Honda Pills',
+        weight = 25,
+        stack = true,
+        close = true,
+        description = 'Pressed Honda pills ready to sell or use',
+        client = {
+            export = 'djfivem-drugs.useDrug',
+        },
     },
 }
