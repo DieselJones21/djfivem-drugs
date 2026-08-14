@@ -37,4 +37,13 @@ Tune in `config/config.lua` and `config/drugs.lua`.
 | Cups + Sprite + Hard Candies | store zones | same convenience stores |
 | Process bench | `prop_tool_bench02` | `-427.11, 292.68, 82.23` |
 
+## Honda Pills
+
+| Step | Prop | Coords (placeholders — edit to fit) |
+|------|------|--------------------------------------|
+| Pill capsules | `prop_box_wood02a` | `353.45, -1415.80, 32.50` |
+| Honda formula | `prop_barrel_02b` | `144.20, -2203.85, 4.70` |
+| Honda extract | `prop_barrel_exp_01a` | `-1164.55, -2036.90, 13.15` |
+| Process bench | `prop_tool_bench02` | `1391.55, 3605.20, 38.94` |
+
 Set `blip.enabled = true` on any spot while placing your own coords.

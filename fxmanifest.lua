@@ -20,6 +20,7 @@ client_scripts {
     'client/harvest.lua',
     'client/process.lua',
     'client/sell.lua',
+    'client/effects.lua',
 }
 
 server_scripts {
@@ -27,6 +28,7 @@ server_scripts {
     'server/harvest.lua',
     'server/process.lua',
     'server/sell.lua',
+    'server/effects.lua',
 }
 
 dependencies {

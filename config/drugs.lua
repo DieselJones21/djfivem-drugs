@@ -1,9 +1,11 @@
 --[[
-    Add new drugs here. Everything else (process bench, sell prices, recipes)
-    is driven from this table — no client/server code changes needed.
+    Drug definitions.
 
-    Default craft rule used below:
+    Default craft rule:
       5 of each ingredient → 7 finished product
+
+    effects = optional usable high when the finished item is used from inventory.
+    Tune / disable per drug. Global toggle: Config.UseEffects
 ]]
 
 Config.Drugs = {
@@ -43,6 +45,22 @@ Config.Drugs = {
             minQty = 1,
             maxQty = 4,
         },
+        effects = {
+            enabled = true,
+            label = 'Chugging Pink Energy',
+            useTime = 3500,
+            duration = 60000,
+            anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle', flag = 49 },
+            health = 10,
+            armor = 5,
+            stress = -15,
+            stamina = true,
+            sprintMultiplier = 1.35,
+            timecycle = 'drug_flying_01',
+            timecycleStrength = 0.45,
+            shake = { intensity = 0.15, duration = 4000 },
+            screenEffect = 'DrugsMichaelAliensFightIn',
+        },
     },
 
     --------------------------------------------------
@@ -78,6 +96,20 @@ Config.Drugs = {
             maxPrice = 160,
             minQty = 1,
             maxQty = 8,
+        },
+        effects = {
+            enabled = true,
+            label = 'Smoking Weed',
+            useTime = 5000,
+            duration = 75000,
+            anim = { dict = 'amb@world_human_smoking@male@male_a@idle_a', clip = 'idle_b', flag = 49 },
+            stress = -30,
+            health = 5,
+            walk = 'move_m@hipster@a',
+            timecycle = 'spectator5',
+            timecycleStrength = 0.65,
+            shake = { intensity = 0.25, duration = 6000 },
+            screenEffect = 'DrugsMichaelAliensFight',
         },
     },
 
@@ -115,6 +147,21 @@ Config.Drugs = {
             maxPrice = 420,
             minQty = 1,
             maxQty = 6,
+        },
+        effects = {
+            enabled = true,
+            label = 'Snorting Cocaine',
+            useTime = 4000,
+            duration = 50000,
+            anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer', flag = 49 },
+            armor = 20,
+            stress = 10,
+            stamina = true,
+            sprintMultiplier = 1.45,
+            timecycle = 'drug_wobbly',
+            timecycleStrength = 0.55,
+            shake = { intensity = 0.4, duration = 5000 },
+            screenEffect = 'DrugsTrevorClownsFight',
         },
     },
 
@@ -155,36 +202,74 @@ Config.Drugs = {
             minQty = 1,
             maxQty = 5,
         },
+        effects = {
+            enabled = true,
+            label = 'Sipping Lean',
+            useTime = 4500,
+            duration = 80000,
+            anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle', flag = 49 },
+            health = 8,
+            stress = -40,
+            walk = 'MOVE_M@DRUNK@MODERATEDRUNK',
+            timecycle = 'Drunk',
+            timecycleStrength = 0.7,
+            shake = { intensity = 0.2, duration = 8000 },
+            screenEffect = 'DrugsMichaelAliensFightOut',
+            drunkCamera = true,
+        },
     },
-}
 
---[[
-    EXAMPLE — copy this block to add another drug later:
-
-    meth = {
-        label = 'Meth Bag',
-        item = 'meth_bag',
+    --------------------------------------------------
+    -- Honda Pills
+    --------------------------------------------------
+    honda_pills = {
+        label = 'Honda Pills',
+        item = 'honda_pills',
+        description = 'Pressed Honda pills ready to move',
         ingredients = {
-            { item = 'pseudo', amount = 5 },
-            { item = 'baggies', amount = 5 },
+            { item = 'honda_pill_capsules', amount = 5 },
+            { item = 'honda_formula', amount = 5 },
+            { item = 'honda_extract', amount = 5 },
         },
         process = {
-            label = 'Cook Meth',
-            coords = vec3(0.0, 0.0, 0.0),
-            heading = 0.0,
-            duration = 15000,
+            label = 'Press Honda Pills',
+            -- Placeholder coords — move in config if needed
+            coords = vec3(1391.55, 3605.20, 38.94),
+            heading = 110.0,
+            duration = 11000,
             prop = {
-                model = `bkr_prop_meth_table01a`,
-                heading = 0.0,
+                model = `prop_tool_bench02`,
+                heading = 110.0,
             },
-            output = { item = 'meth_bag', amount = 7 },
+            anim = {
+                dict = 'mini@repair',
+                clip = 'fixing_a_ped',
+            },
+            output = { item = 'honda_pills', amount = 7 },
+            blip = { enabled = false, sprite = 51, color = 46, label = 'Honda Press' },
         },
         sell = {
             enabled = true,
-            minPrice = 300,
-            maxPrice = 500,
+            minPrice = 200,
+            maxPrice = 360,
             minQty = 1,
-            maxQty = 5,
+            maxQty = 6,
+        },
+        effects = {
+            enabled = true,
+            label = 'Popping Honda Pills',
+            useTime = 3000,
+            duration = 55000,
+            anim = { dict = 'mp_suicide', clip = 'pill', flag = 49 },
+            health = 15,
+            armor = 15,
+            stress = -10,
+            stamina = true,
+            sprintMultiplier = 1.2,
+            timecycle = 'drug_flying_base',
+            timecycleStrength = 0.5,
+            shake = { intensity = 0.35, duration = 4500 },
+            screenEffect = 'DrugsMichaelAliensFightIn',
         },
     },
-]]
+}
