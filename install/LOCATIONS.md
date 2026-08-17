@@ -46,4 +46,13 @@ Tune in `config/config.lua` and `config/drugs.lua`.
 | Honda extract | `prop_barrel_exp_01a` | `-1164.55, -2036.90, 13.15` |
 | Process bench | `prop_tool_bench02` | `1391.55, 3605.20, 38.94` |
 
+## Stab Juice
+
+| Step | Prop | Coords (placeholders — edit to fit) |
+|------|------|--------------------------------------|
+| Stab powder | `prop_barrel_02b` | `892.35, -2172.40, 32.28` |
+| Stab candy | `prop_box_wood02a` | `46.80, -1749.55, 29.63` |
+| Concentrated juice | `prop_barrel_exp_01a` | `1208.55, -3114.80, 5.54` |
+| Process bench | `prop_tool_bench02` | `195.40, -933.55, 30.69` |
+
 Set `blip.enabled = true` on any spot while placing your own coords.

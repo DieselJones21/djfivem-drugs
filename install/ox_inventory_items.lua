@@ -1,10 +1,21 @@
 --[[
-    Copy these entries into ox_inventory/data/items.lua
-    (or merge into your items file). Icons are optional — add images
-    under ox_inventory/web/images matching each item name.
+    Merge into ox_inventory/data/items.lua
 
-    Finished drugs use the client export for usable effects.
+    IMPORTANT for usable effects:
+      Replace RESOURCE_NAME below with your resource FOLDER name
+      (usually djfivem-drugs). Check F8 on start — the script prints the
+      exact export string.
+
+      Example:
+        client = { export = 'djfivem-drugs.useDrug' }
+
+    QBX also registers usables automatically, so effects should still work
+    even before you add the client.export lines.
 ]]
+
+local useExport = {
+    export = 'djfivem-drugs.useDrug', -- change if your folder name differs
+}
 
 return {
     -- Ingredients: Pink Energy
@@ -129,16 +140,37 @@ return {
         description = 'Concentrated extract used in Honda pills',
     },
 
-    -- Finished product (usable = effects via djfivem-drugs export)
+    -- Ingredients: Stab Juice
+    ['stab_powder'] = {
+        label = 'Stab Powder',
+        weight = 30,
+        stack = true,
+        close = true,
+        description = 'Raw powder used to mix Stab Juice',
+    },
+    ['stab_candy'] = {
+        label = 'Stab Candy',
+        weight = 20,
+        stack = true,
+        close = true,
+        description = 'Sweet candy base for Stab Juice',
+    },
+    ['concentrated_juice'] = {
+        label = 'Concentrated Juice',
+        weight = 45,
+        stack = true,
+        close = true,
+        description = 'Thick concentrate for Stab Juice',
+    },
+
+    -- Finished products (usable)
     ['pink_energy'] = {
         label = 'Pink Energy',
         weight = 150,
         stack = true,
         close = true,
         description = 'Premium street stimulant — highest demand',
-        client = {
-            export = 'djfivem-drugs.useDrug',
-        },
+        client = useExport,
     },
     ['weed_bag'] = {
         label = 'Bagged Weed',
@@ -146,9 +178,7 @@ return {
         stack = true,
         close = true,
         description = 'A bag of weed ready to sell',
-        client = {
-            export = 'djfivem-drugs.useDrug',
-        },
+        client = useExport,
     },
     ['cocaine_bag'] = {
         label = 'Cocaine Bag',
@@ -156,9 +186,7 @@ return {
         stack = true,
         close = true,
         description = 'Processed cocaine packaged for sale',
-        client = {
-            export = 'djfivem-drugs.useDrug',
-        },
+        client = useExport,
     },
     ['lean_cup'] = {
         label = 'Lean Cup',
@@ -166,9 +194,7 @@ return {
         stack = true,
         close = true,
         description = 'A mixed cup of lean ready to move',
-        client = {
-            export = 'djfivem-drugs.useDrug',
-        },
+        client = useExport,
     },
     ['honda_pills'] = {
         label = 'Honda Pills',
@@ -176,8 +202,14 @@ return {
         stack = true,
         close = true,
         description = 'Pressed Honda pills ready to sell or use',
-        client = {
-            export = 'djfivem-drugs.useDrug',
-        },
+        client = useExport,
+    },
+    ['stab_juice'] = {
+        label = 'Stab Juice',
+        weight = 90,
+        stack = true,
+        close = true,
+        description = 'Mixed Stab Juice ready to sell or use',
+        client = useExport,
     },
 }

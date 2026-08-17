@@ -411,4 +411,59 @@ Config.Harvest = {
         anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
         blip = { enabled = false, sprite = 51, color = 46, label = 'Honda Extract' },
     },
+
+    --------------------------------------------------
+    -- Stab Juice ingredient benches (placeholder coords — edit to fit your map)
+    --------------------------------------------------
+    {
+        id = 'stab_powder',
+        type = 'bench',
+        item = 'stab_powder',
+        label = 'Scoop Stab Powder',
+        amount = { min = 5, max = 10 },
+        duration = 6500,
+        cooldown = 10,
+        coords = vec3(892.35, -2172.40, 32.28),
+        heading = 175.0,
+        prop = {
+            model = `prop_barrel_02b`,
+            heading = 175.0,
+        },
+        anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
+        blip = { enabled = false, sprite = 499, color = 1, label = 'Stab Powder' },
+    },
+    {
+        id = 'stab_candy',
+        type = 'bench',
+        item = 'stab_candy',
+        label = 'Grab Stab Candy',
+        amount = { min = 5, max = 10 },
+        duration = 6000,
+        cooldown = 10,
+        coords = vec3(46.80, -1749.55, 29.63),
+        heading = 50.0,
+        prop = {
+            model = `prop_box_wood02a`,
+            heading = 50.0,
+        },
+        anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+        blip = { enabled = false, sprite = 499, color = 1, label = 'Stab Candy' },
+    },
+    {
+        id = 'concentrated_juice',
+        type = 'bench',
+        item = 'concentrated_juice',
+        label = 'Tap Concentrated Juice',
+        amount = { min = 5, max = 10 },
+        duration = 7000,
+        cooldown = 10,
+        coords = vec3(1208.55, -3114.80, 5.54),
+        heading = 90.0,
+        prop = {
+            model = `prop_barrel_exp_01a`,
+            heading = 90.0,
+        },
+        anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
+        blip = { enabled = false, sprite = 499, color = 1, label = 'Concentrated Juice' },
+    },
 }
