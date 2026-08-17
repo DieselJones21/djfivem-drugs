@@ -373,6 +373,7 @@ Config.Harvest = {
         prop = {
             model = `prop_cs_pills`, -- pill bottle
             heading = 50.0,
+            placeOnGround = false,
         },
         anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
         blip = { enabled = false, sprite = 51, color = 46, label = 'Honda Capsules' },

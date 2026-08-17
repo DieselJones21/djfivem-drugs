@@ -26,7 +26,7 @@ local function doHarvest(spot, entityKey)
     TriggerServerEvent('djdrugs:server:harvest', spot.id, entityKey)
 end
 
---- Spawn a single interactable harvest bench/prop
+--- Spawn a harvest prop for looks + reliable box-zone 3rd eye
 local function setupBench(spot)
     Client.AddBlip(spot.coords, spot.blip)
 
@@ -49,18 +49,19 @@ local function setupBench(spot)
         },
     }
 
-    local obj = Client.SpawnTargetProp(propData.model, spot.coords, heading, options, true)
-    if not obj then
-        -- Fallback zone if prop fails to load
-        local zoneId = exports.ox_target:addBoxZone({
-            coords = spot.coords,
-            size = spot.size or vec3(1.6, 1.6, 2.0),
-            rotation = heading,
-            debug = Config.Debug,
-            options = options,
-        })
-        Client.harvestZones[#Client.harvestZones + 1] = zoneId
-    end
+    -- Visual prop (small props still use a zone for targeting)
+    local placeOnGround = propData.placeOnGround
+    if placeOnGround == nil then placeOnGround = true end
+    Client.SpawnProp(propData.model, spot.coords, heading, placeOnGround)
+
+    local zoneId = exports.ox_target:addBoxZone({
+        coords = spot.coords,
+        size = spot.size or vec3(1.6, 1.6, 2.0),
+        rotation = heading,
+        debug = Config.Debug,
+        options = options,
+    })
+    Client.harvestZones[#Client.harvestZones + 1] = zoneId
 end
 
 --- Plant fields (weed / coca)
