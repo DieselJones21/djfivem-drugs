@@ -4,13 +4,22 @@
     Default craft rule:
       5 of each ingredient → 7 finished product
 
-    effects = optional usable high when the finished item is used from inventory.
-    Tune / disable per drug. Global toggle: Config.UseEffects
+    Combat stim effect (Pink Energy / Honda Pills / Black Lotus):
+      25% armor + 45s infinite stamina — no screen FX
 ]]
+
+-- Shared combat stim (armor + stamina only)
+local COMBAT_STIM = {
+    enabled = true,
+    duration = 45000,
+    armorPercent = 25,
+    stamina = true,
+    -- intentionally no timecycle / screenEffect / shake / walk
+}
 
 Config.Drugs = {
     --------------------------------------------------
-    -- Pink Energy (highest value, 4 ingredients)
+    -- Pink Energy
     --------------------------------------------------
     pink_energy = {
         label = 'Pink Energy',
@@ -46,20 +55,13 @@ Config.Drugs = {
             maxQty = 4,
         },
         effects = {
-            enabled = true,
+            enabled = COMBAT_STIM.enabled,
             label = 'Chugging Pink Energy',
             useTime = 3500,
-            duration = 60000,
+            duration = COMBAT_STIM.duration,
             anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle', flag = 49 },
-            health = 10,
-            armor = 5,
-            stress = -15,
-            stamina = true,
-            sprintMultiplier = 1.35,
-            timecycle = 'drug_flying_01',
-            timecycleStrength = 0.45,
-            shake = { intensity = 0.15, duration = 4000 },
-            screenEffect = 'DrugsMichaelAliensFightIn',
+            armorPercent = COMBAT_STIM.armorPercent,
+            stamina = COMBAT_STIM.stamina,
         },
     },
 
@@ -101,15 +103,10 @@ Config.Drugs = {
             enabled = true,
             label = 'Smoking Weed',
             useTime = 5000,
-            duration = 75000,
+            duration = 45000,
             anim = { dict = 'amb@world_human_smoking@male@male_a@idle_a', clip = 'idle_b', flag = 49 },
             stress = -30,
-            health = 5,
-            walk = 'move_m@hipster@a',
-            timecycle = 'spectator5',
-            timecycleStrength = 0.65,
-            shake = { intensity = 0.25, duration = 6000 },
-            screenEffect = 'DrugsMichaelAliensFight',
+            -- no screen FX
         },
     },
 
@@ -152,16 +149,11 @@ Config.Drugs = {
             enabled = true,
             label = 'Snorting Cocaine',
             useTime = 4000,
-            duration = 50000,
+            duration = 45000,
             anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer', flag = 49 },
-            armor = 20,
-            stress = 10,
+            armorPercent = 15,
             stamina = true,
-            sprintMultiplier = 1.45,
-            timecycle = 'drug_wobbly',
-            timecycleStrength = 0.55,
-            shake = { intensity = 0.4, duration = 5000 },
-            screenEffect = 'DrugsTrevorClownsFight',
+            -- no screen FX
         },
     },
 
@@ -206,16 +198,10 @@ Config.Drugs = {
             enabled = true,
             label = 'Sipping Lean',
             useTime = 4500,
-            duration = 80000,
+            duration = 45000,
             anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle', flag = 49 },
-            health = 8,
             stress = -40,
-            walk = 'MOVE_M@DRUNK@MODERATEDRUNK',
-            timecycle = 'Drunk',
-            timecycleStrength = 0.7,
-            shake = { intensity = 0.2, duration = 8000 },
-            screenEffect = 'DrugsMichaelAliensFightOut',
-            drunkCamera = true,
+            -- no screen FX
         },
     },
 
@@ -233,7 +219,6 @@ Config.Drugs = {
         },
         process = {
             label = 'Press Honda Pills',
-            -- Placeholder coords — move in config if needed
             coords = vec3(1391.55, 3605.20, 38.94),
             heading = 110.0,
             duration = 11000,
@@ -256,20 +241,13 @@ Config.Drugs = {
             maxQty = 6,
         },
         effects = {
-            enabled = true,
+            enabled = COMBAT_STIM.enabled,
             label = 'Popping Honda Pills',
             useTime = 3000,
-            duration = 55000,
+            duration = COMBAT_STIM.duration,
             anim = { dict = 'mp_player_inteat@burger', clip = 'mp_player_int_eat_burger', flag = 49 },
-            health = 15,
-            armor = 15,
-            stress = -10,
-            stamina = true,
-            sprintMultiplier = 1.2,
-            timecycle = 'drug_flying_base',
-            timecycleStrength = 0.5,
-            shake = { intensity = 0.35, duration = 4500 },
-            screenEffect = 'DrugsMichaelAliensFightIn',
+            armorPercent = COMBAT_STIM.armorPercent,
+            stamina = COMBAT_STIM.stamina,
         },
     },
 
@@ -287,7 +265,6 @@ Config.Drugs = {
         },
         process = {
             label = 'Mix Stab Juice',
-            -- Placeholder coords — edit to fit your map
             coords = vec3(195.40, -933.55, 30.69),
             heading = 160.0,
             duration = 11000,
@@ -313,18 +290,57 @@ Config.Drugs = {
             enabled = true,
             label = 'Drinking Stab Juice',
             useTime = 4000,
-            duration = 60000,
+            duration = 45000,
             anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle', flag = 49 },
-            health = 12,
-            armor = 10,
-            stress = -20,
+            armorPercent = 15,
             stamina = true,
-            sprintMultiplier = 1.3,
-            walk = 'move_m@brave',
-            timecycle = 'drug_wobbly',
-            timecycleStrength = 0.55,
-            shake = { intensity = 0.3, duration = 5000 },
-            screenEffect = 'DrugsTrevorClownsFight',
+            -- no screen FX
+        },
+    },
+
+    --------------------------------------------------
+    -- Black Lotus
+    --------------------------------------------------
+    black_lotus = {
+        label = 'Black Lotus',
+        item = 'black_lotus',
+        description = 'Refined Black Lotus ready to move',
+        ingredients = {
+            { item = 'lotus_powder', amount = 5 },
+            { item = 'black_liquid_extract', amount = 5 },
+        },
+        process = {
+            label = 'Brew Black Lotus',
+            -- Placeholder coords — edit to fit your map
+            coords = vec3(1394.20, 3608.55, 38.94),
+            heading = 200.0,
+            duration = 12000,
+            prop = {
+                model = `bkr_prop_meth_table01a`,
+                heading = 200.0,
+            },
+            anim = {
+                dict = 'anim@amb@business@coc@coc_unpack_cut@',
+                clip = 'fullcut_cycle_v6_cokecutter',
+            },
+            output = { item = 'black_lotus', amount = 7 },
+            blip = { enabled = false, sprite = 499, color = 40, label = 'Black Lotus Lab' },
+        },
+        sell = {
+            enabled = true,
+            minPrice = 500,
+            maxPrice = 850,
+            minQty = 1,
+            maxQty = 6,
+        },
+        effects = {
+            enabled = COMBAT_STIM.enabled,
+            label = 'Using Black Lotus',
+            useTime = 3500,
+            duration = COMBAT_STIM.duration,
+            anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle', flag = 49 },
+            armorPercent = COMBAT_STIM.armorPercent,
+            stamina = COMBAT_STIM.stamina,
         },
     },
 }

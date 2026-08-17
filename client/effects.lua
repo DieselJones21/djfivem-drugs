@@ -43,7 +43,16 @@ function Effects.Apply(drugId, effect)
     end
 
     if effect.armor and effect.armor > 0 then
-        SetPedArmour(ped, math.min(100, GetPedArmour(ped) + effect.armor))
+        local maxArmour = GetPlayerMaxArmour(playerId)
+        if maxArmour < 1 then maxArmour = 100 end
+        SetPedArmour(ped, math.min(maxArmour, GetPedArmour(ped) + effect.armor))
+    end
+
+    if effect.armorPercent and effect.armorPercent > 0 then
+        local maxArmour = GetPlayerMaxArmour(playerId)
+        if maxArmour < 1 then maxArmour = 100 end
+        local add = math.floor(maxArmour * (effect.armorPercent / 100.0))
+        SetPedArmour(ped, math.min(maxArmour, GetPedArmour(ped) + add))
     end
 
     if effect.stress then
