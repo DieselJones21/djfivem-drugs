@@ -236,7 +236,7 @@ Config.Harvest = {
         coords = vec3(1243.59, -425.83, 67.92),
         heading = 0.0,
         prop = {
-            model = `prop_tool_bench02`,
+            model = `prop_rock_4_c`, -- crystal / rock cluster
             heading = 0.0,
         },
         anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
@@ -253,7 +253,7 @@ Config.Harvest = {
         coords = vec3(955.0, -194.81, 78.3),
         heading = 170.0,
         prop = {
-            model = `prop_barrel_exp_01a`,
+            model = `prop_barrel_01a`, -- chemical liquid barrel
             heading = 170.0,
         },
         anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
@@ -270,7 +270,7 @@ Config.Harvest = {
         coords = vec3(1123.41, -652.92, 55.73),
         heading = 0.0,
         prop = {
-            model = `prop_box_wood02a`,
+            model = `prop_box_wood05a`, -- crate of jars/bottles
             heading = 0.0,
         },
         anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
@@ -287,7 +287,7 @@ Config.Harvest = {
         coords = vec3(756.17, -672.71, 27.73),
         heading = 70.0,
         prop = {
-            model = `prop_barrel_02b`,
+            model = `prop_feed_sack_01`, -- powder sack
             heading = 70.0,
         },
         anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
@@ -295,7 +295,7 @@ Config.Harvest = {
     },
 
     --------------------------------------------------
-    -- Weed buds bench
+    -- Weed buds
     --------------------------------------------------
     {
         id = 'weed_grove',
@@ -308,7 +308,7 @@ Config.Harvest = {
         coords = vec3(99.71, -1978.33, 19.76),
         heading = 0.0,
         prop = {
-            model = `bkr_prop_weed_table_01a`,
+            model = `prop_weed_01`, -- weed plant
             heading = 0.0,
         },
         anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
@@ -316,7 +316,7 @@ Config.Harvest = {
     },
 
     --------------------------------------------------
-    -- Coca leaves bench
+    -- Coca leaves
     --------------------------------------------------
     {
         id = 'coca_field',
@@ -329,7 +329,7 @@ Config.Harvest = {
         coords = vec3(-1485.49, -909.42, 9.02),
         heading = 90.0,
         prop = {
-            model = `prop_tool_bench02`,
+            model = `prop_plant_01a`, -- leafy plant
             heading = 90.0,
         },
         anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
@@ -337,7 +337,7 @@ Config.Harvest = {
     },
 
     --------------------------------------------------
-    -- Lean codeine bench
+    -- Lean codeine
     --------------------------------------------------
     {
         id = 'codeine_pharmacy',
@@ -350,7 +350,7 @@ Config.Harvest = {
         coords = vec3(-620.23, 323.26, 81.26),
         heading = 340.0,
         prop = {
-            model = `prop_tool_bench02_ld`,
+            model = `prop_drug_bottle`, -- medicine bottle
             heading = 340.0,
         },
         anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer' },
@@ -358,7 +358,7 @@ Config.Harvest = {
     },
 
     --------------------------------------------------
-    -- Honda Pills ingredient benches (placeholder coords — edit to fit your map)
+    -- Honda Pills ingredients
     --------------------------------------------------
     {
         id = 'honda_capsules',
@@ -371,8 +371,9 @@ Config.Harvest = {
         coords = vec3(353.45, -1415.80, 32.50),
         heading = 50.0,
         prop = {
-            model = `prop_box_wood02a`,
+            model = `prop_cs_pills`, -- pill bottle
             heading = 50.0,
+            placeOnGround = false,
         },
         anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
         blip = { enabled = false, sprite = 51, color = 46, label = 'Honda Capsules' },
@@ -388,7 +389,7 @@ Config.Harvest = {
         coords = vec3(144.20, -2203.85, 4.70),
         heading = 180.0,
         prop = {
-            model = `prop_barrel_02b`,
+            model = `prop_barrel_02b`, -- powder barrel
             heading = 180.0,
         },
         anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
@@ -405,7 +406,7 @@ Config.Harvest = {
         coords = vec3(-1164.55, -2036.90, 13.15),
         heading = 315.0,
         prop = {
-            model = `prop_barrel_exp_01a`,
+            model = `prop_barrel_exp_01a`, -- chemical extract barrel
             heading = 315.0,
         },
         anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
@@ -413,7 +414,7 @@ Config.Harvest = {
     },
 
     --------------------------------------------------
-    -- Stab Juice ingredient benches (placeholder coords — edit to fit your map)
+    -- Stab Juice ingredients
     --------------------------------------------------
     {
         id = 'stab_powder',
@@ -426,7 +427,7 @@ Config.Harvest = {
         coords = vec3(892.35, -2172.40, 32.28),
         heading = 175.0,
         prop = {
-            model = `prop_barrel_02b`,
+            model = `prop_feed_sack_01`, -- powder sack
             heading = 175.0,
         },
         anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
@@ -443,7 +444,7 @@ Config.Harvest = {
         coords = vec3(46.80, -1749.55, 29.63),
         heading = 50.0,
         prop = {
-            model = `prop_box_wood02a`,
+            model = `prop_candy_pqs`, -- candy box
             heading = 50.0,
         },
         anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
@@ -460,10 +461,48 @@ Config.Harvest = {
         coords = vec3(1208.55, -3114.80, 5.54),
         heading = 90.0,
         prop = {
-            model = `prop_barrel_exp_01a`,
+            model = `prop_barrel_01a`, -- liquid barrel
             heading = 90.0,
         },
         anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
         blip = { enabled = false, sprite = 499, color = 1, label = 'Concentrated Juice' },
+    },
+
+    --------------------------------------------------
+    -- Black Lotus ingredients (placeholder coords)
+    --------------------------------------------------
+    {
+        id = 'lotus_powder',
+        type = 'bench',
+        item = 'lotus_powder',
+        label = 'Scoop Lotus Powder',
+        amount = { min = 5, max = 10 },
+        duration = 6500,
+        cooldown = 10,
+        coords = vec3(380.55, -1835.20, 28.75),
+        heading = 45.0,
+        prop = {
+            model = `prop_feed_sack_01`, -- powder sack
+            heading = 45.0,
+        },
+        anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
+        blip = { enabled = false, sprite = 499, color = 40, label = 'Lotus Powder' },
+    },
+    {
+        id = 'black_liquid_extract',
+        type = 'bench',
+        item = 'black_liquid_extract',
+        label = 'Tap Black Liquid Extract',
+        amount = { min = 5, max = 10 },
+        duration = 7500,
+        cooldown = 10,
+        coords = vec3(172.40, -1717.85, 29.35),
+        heading = 140.0,
+        prop = {
+            model = `prop_barrel_exp_01a`, -- dark chemical barrel
+            heading = 140.0,
+        },
+        anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
+        blip = { enabled = false, sprite = 499, color = 40, label = 'Black Liquid Extract' },
     },
 }

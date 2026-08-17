@@ -1,20 +1,14 @@
 --[[
     Merge into ox_inventory/data/items.lua
 
-    IMPORTANT for usable effects:
-      Replace RESOURCE_NAME below with your resource FOLDER name
-      (usually djfivem-drugs). Check F8 on start — the script prints the
-      exact export string.
+    Finished drugs MUST include the server export or they will not show Use:
+      server = { export = 'djfivem-drugs.useDrugServer' }
 
-      Example:
-        client = { export = 'djfivem-drugs.useDrug' }
-
-    QBX also registers usables automatically, so effects should still work
-    even before you add the client.export lines.
+    Change the folder name in the export if your resource folder differs.
 ]]
 
-local useExport = {
-    export = 'djfivem-drugs.useDrug', -- change if your folder name differs
+local drugUse = {
+    export = 'djfivem-drugs.useDrugServer',
 }
 
 return {
@@ -163,14 +157,30 @@ return {
         description = 'Thick concentrate for Stab Juice',
     },
 
+    -- Ingredients: Black Lotus
+    ['lotus_powder'] = {
+        label = 'Lotus Powder',
+        weight = 30,
+        stack = true,
+        close = true,
+        description = 'Fine lotus powder for Black Lotus',
+    },
+    ['black_liquid_extract'] = {
+        label = 'Black Liquid Extract',
+        weight = 50,
+        stack = true,
+        close = true,
+        description = 'Dark liquid extract for Black Lotus',
+    },
+
     -- Finished products (usable)
     ['pink_energy'] = {
         label = 'Pink Energy',
         weight = 150,
         stack = true,
         close = true,
-        description = 'Premium street stimulant — highest demand',
-        client = useExport,
+        description = 'Combat stim — 25% armor + 45s stamina',
+        server = drugUse,
     },
     ['weed_bag'] = {
         label = 'Bagged Weed',
@@ -178,7 +188,7 @@ return {
         stack = true,
         close = true,
         description = 'A bag of weed ready to sell',
-        client = useExport,
+        server = drugUse,
     },
     ['cocaine_bag'] = {
         label = 'Cocaine Bag',
@@ -186,7 +196,7 @@ return {
         stack = true,
         close = true,
         description = 'Processed cocaine packaged for sale',
-        client = useExport,
+        server = drugUse,
     },
     ['lean_cup'] = {
         label = 'Lean Cup',
@@ -194,15 +204,15 @@ return {
         stack = true,
         close = true,
         description = 'A mixed cup of lean ready to move',
-        client = useExport,
+        server = drugUse,
     },
     ['honda_pills'] = {
         label = 'Honda Pills',
         weight = 25,
         stack = true,
         close = true,
-        description = 'Pressed Honda pills ready to sell or use',
-        client = useExport,
+        description = 'Combat stim — 25% armor + 45s stamina',
+        server = drugUse,
     },
     ['stab_juice'] = {
         label = 'Stab Juice',
@@ -210,6 +220,14 @@ return {
         stack = true,
         close = true,
         description = 'Mixed Stab Juice ready to sell or use',
-        client = useExport,
+        server = drugUse,
+    },
+    ['black_lotus'] = {
+        label = 'Black Lotus',
+        weight = 40,
+        stack = true,
+        close = true,
+        description = 'Combat stim — 25% armor + 45s stamina',
+        server = drugUse,
     },
 }
