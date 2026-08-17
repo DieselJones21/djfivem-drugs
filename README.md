@@ -36,74 +36,45 @@ ensure djfivem-drugs
 
 | Drug | Harvest / supplies | Process prop | Sell/unit |
 |------|--------------------|--------------|-----------|
-| **Pink Energy** | 4 bench stations (crystals, solvent barrel, jar crates, caffeine barrel) | meth table | $550–$900 |
+| **Pink Energy** | 4 ingredient benches | meth table | $550–$900 |
 | **Weed** | weed bud bench + store baggies | weed table | $80–$160 |
-| **Cocaine** | coca leaf bench + acetone/baggies from stores | coke table | $250–$420 |
-| **Lean** | codeine bench + ice coolers + cups/sprite/hard candies stores | tool bench | $140–$260 |
+| **Cocaine** | coca leaf bench + acetone/baggies | coke table | $250–$420 |
+| **Lean** | codeine + ice + cups/sprite/hard candies | tool bench | $140–$260 |
+| **Honda Pills** | capsules + formula + extract | tool bench | $500–$850 |
+| **Stab Juice** | stab powder + stab candy + concentrated juice | tool bench | $500–$850 |
 
-## Props by location
+## Drug effects
 
-| Spot | Prop |
-|------|------|
-| Pink crystals | `prop_tool_bench02` |
-| Pink solvent | `prop_barrel_exp_01a` |
-| Chug jars | `prop_box_wood02a` |
-| Caffeine | `prop_barrel_02b` |
-| Codeine | `prop_tool_bench02_ld` |
-| Ice machines | `prop_bar_cooler_03` |
-| Weed buds harvest | `bkr_prop_weed_table_01a` |
-| Coca leaves harvest | `prop_tool_bench02` |
-| Pink Energy process | `bkr_prop_meth_table01a` |
-| Weed process | `bkr_prop_weed_table_01a` |
-| Cocaine process | `bkr_prop_coke_table01a` |
-| Lean process | `prop_tool_bench02` |
-| Convenience stores | world zones only |
+Finished drugs are usable from inventory.
 
-Coords cheat sheet: `install/LOCATIONS.md`
+1. **QBX auto-registers usables** for every finished drug (works even without ox item exports)
+2. Optional ox_inventory `client.export` (see `install/ox_inventory_items.lua`)
 
-## How to play
+On resource start, the console prints the exact export string for your folder name.
 
-1. 3rd eye harvest benches / plants / stores / ice machines
-2. 3rd eye the drug’s process bench
-3. `/trap` → buyer runs up → 3rd eye → sell
+- Toggle globally: `Config.UseEffects = true`
+- Per-drug: `Config.Drugs.<id>.effects`
+- Stress relieve: `Config.StressEvent` (default `hud:server:RelieveStress`)
+
+Flow: use item → progress → consume 1 → high → wears off.
+
+If Use does nothing: merge ox items, restart `qbx_core`/`djfivem-drugs`, then use a finished product from inventory.
+
+## Coords
+
+See `install/LOCATIONS.md` (Honda + Stab Juice harvest spots are placeholders — edit freely).
 
 ## Adding a new drug
 
 1. Add ox_inventory items  
-2. Add a `type = 'bench'` harvest (with `prop.model`) and/or store entries  
-3. Add a `Config.Drugs` block with `process.prop`  
-
-```lua
-meth = {
-    label = 'Meth Bag',
-    item = 'meth_bag',
-    ingredients = {
-        { item = 'pseudo', amount = 2 },
-        { item = 'baggies', amount = 1 },
-    },
-    process = {
-        label = 'Cook Meth',
-        coords = vec3(0.0, 0.0, 0.0),
-        heading = 0.0,
-        duration = 15000,
-        prop = { model = `bkr_prop_meth_table01a`, heading = 0.0 },
-        output = { item = 'meth_bag', amount = 1 },
-    },
-    sell = {
-        enabled = true,
-        minPrice = 300,
-        maxPrice = 500,
-        minQty = 1,
-        maxQty = 5,
-    },
-},
-```
+2. Add `type = 'bench'` harvest spots  
+3. Add a `Config.Drugs` block with `process`, `sell`, and optional `effects`  
 
 ## Layout
 
 ```
-client/     harvest benches, process benches, /trap sell
-server/     validation, ox_inventory, qbx money
+client/     harvest, process, /trap sell, effects
+server/     validation, ox_inventory, qbx money, usables
 config/     config.lua + drugs.lua
 shared/     utils + qbx/ox bridge
 install/    ox items + locations

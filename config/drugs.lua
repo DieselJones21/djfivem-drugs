@@ -250,8 +250,8 @@ Config.Drugs = {
         },
         sell = {
             enabled = true,
-            minPrice = 200,
-            maxPrice = 360,
+            minPrice = 500,
+            maxPrice = 850,
             minQty = 1,
             maxQty = 6,
         },
@@ -260,7 +260,7 @@ Config.Drugs = {
             label = 'Popping Honda Pills',
             useTime = 3000,
             duration = 55000,
-            anim = { dict = 'mp_suicide', clip = 'pill', flag = 49 },
+            anim = { dict = 'mp_player_inteat@burger', clip = 'mp_player_int_eat_burger', flag = 49 },
             health = 15,
             armor = 15,
             stress = -10,
@@ -270,6 +270,61 @@ Config.Drugs = {
             timecycleStrength = 0.5,
             shake = { intensity = 0.35, duration = 4500 },
             screenEffect = 'DrugsMichaelAliensFightIn',
+        },
+    },
+
+    --------------------------------------------------
+    -- Stab Juice
+    --------------------------------------------------
+    stab_juice = {
+        label = 'Stab Juice',
+        item = 'stab_juice',
+        description = 'Mixed Stab Juice ready to move',
+        ingredients = {
+            { item = 'stab_powder', amount = 5 },
+            { item = 'stab_candy', amount = 5 },
+            { item = 'concentrated_juice', amount = 5 },
+        },
+        process = {
+            label = 'Mix Stab Juice',
+            -- Placeholder coords — edit to fit your map
+            coords = vec3(195.40, -933.55, 30.69),
+            heading = 160.0,
+            duration = 11000,
+            prop = {
+                model = `prop_tool_bench02`,
+                heading = 160.0,
+            },
+            anim = {
+                dict = 'mini@repair',
+                clip = 'fixing_a_ped',
+            },
+            output = { item = 'stab_juice', amount = 7 },
+            blip = { enabled = false, sprite = 499, color = 1, label = 'Stab Juice Lab' },
+        },
+        sell = {
+            enabled = true,
+            minPrice = 500,
+            maxPrice = 850,
+            minQty = 1,
+            maxQty = 6,
+        },
+        effects = {
+            enabled = true,
+            label = 'Drinking Stab Juice',
+            useTime = 4000,
+            duration = 60000,
+            anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle', flag = 49 },
+            health = 12,
+            armor = 10,
+            stress = -20,
+            stamina = true,
+            sprintMultiplier = 1.3,
+            walk = 'move_m@brave',
+            timecycle = 'drug_wobbly',
+            timecycleStrength = 0.55,
+            shake = { intensity = 0.3, duration = 5000 },
+            screenEffect = 'DrugsTrevorClownsFight',
         },
     },
 }

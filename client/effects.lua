@@ -1,18 +1,8 @@
 Effects = {
     active = nil,
     token = 0,
+    busy = false,
 }
-
-local function loadAnimDict(dict)
-    if not dict then return false end
-    RequestAnimDict(dict)
-    local timeout = GetGameTimer() + 5000
-    while not HasAnimDictLoaded(dict) do
-        if GetGameTimer() > timeout then return false end
-        Wait(10)
-    end
-    return true
-end
 
 local function clearVisuals()
     ClearTimecycleModifier()
@@ -32,7 +22,6 @@ end
 
 local function applyStress(amount)
     if not amount or amount == 0 then return end
-    -- Negative = relieve stress (common QB/QBX HUD event)
     if amount < 0 and Config.StressEvent then
         TriggerServerEvent(Config.StressEvent, math.abs(amount))
     elseif amount > 0 and Config.StressGainEvent then
@@ -96,7 +85,7 @@ function Effects.Apply(drugId, effect)
     end
 
     if effect.sprintMultiplier and effect.sprintMultiplier > 1.0 then
-        SetRunSprintMultiplierForPlayer(playerId, effect.sprintMultiplier)
+        SetRunSprintMultiplierForPlayer(playerId, math.min(1.49, effect.sprintMultiplier))
     end
 
     CreateThread(function()
@@ -115,48 +104,87 @@ function Effects.Apply(drugId, effect)
     end)
 end
 
---- ox_inventory client export — wire finished drug items to this
-exports('useDrug', function(data, slot)
-    if not Config.UseEffects then return end
-    if not data or not data.name then return end
+--- Shared use flow (QBX usable + ox_inventory export)
+function Effects.TryUse(itemName, oxData)
+    if Effects.busy then return end
+    if not Config.UseEffects then
+        Client.Notify('Drug effects are disabled', 'error')
+        return
+    end
 
-    local drugId, drug = Utils.GetDrugByItem(data.name)
+    local drugId, drug = Utils.GetDrugByItem(itemName)
     if not drug or not drug.effects or drug.effects.enabled == false then
         Client.Notify('This item has no effect configured', 'error')
         return
     end
 
+    Effects.busy = true
     local effect = drug.effects
-    local canUse = lib.callback.await('djdrugs:server:canUseDrug', false, data.name)
-    if not canUse then return end
+
+    local canUse = lib.callback.await('djdrugs:server:canUseDrug', false, itemName)
+    if not canUse then
+        Effects.busy = false
+        return
+    end
 
     local progressOk = true
     if effect.useTime and effect.useTime > 0 then
         progressOk = Client.Progress(effect.label or ('Using ' .. drug.label), effect.useTime, effect.anim)
-    elseif effect.anim and effect.anim.dict and loadAnimDict(effect.anim.dict) then
-        TaskPlayAnim(PlayerPedId(), effect.anim.dict, effect.anim.clip, 8.0, -8.0, 2500, effect.anim.flag or 49, 0, false, false, false)
-        Wait(2500)
-        ClearPedTasks(PlayerPedId())
     end
 
     if not progressOk then
+        Effects.busy = false
         Client.Notify('Cancelled', 'error')
         return
     end
 
-    -- Consume after successful progress
-    exports.ox_inventory:useItem(data, function(used)
-        if not used then
-            Client.Notify('Could not use item', 'error')
-            return
-        end
-        TriggerServerEvent('djdrugs:server:usedDrug', data.name)
+    local function afterConsumed()
         Effects.Apply(drugId, effect)
         Client.Notify(('You used %s'):format(drug.label), 'success')
-    end)
+        Effects.busy = false
+    end
+
+    -- ox_inventory export path (item already selected in inventory UI)
+    if oxData then
+        exports.ox_inventory:useItem(oxData, function(used)
+            if not used then
+                Effects.busy = false
+                Client.Notify('Could not use item', 'error')
+                return
+            end
+            TriggerServerEvent('djdrugs:server:usedDrug', itemName)
+            afterConsumed()
+        end)
+        return
+    end
+
+    -- QBX CreateUseableItem path — server removes the item
+    local consumed = lib.callback.await('djdrugs:server:consumeDrug', false, itemName)
+    if not consumed then
+        Effects.busy = false
+        Client.Notify('Could not use item', 'error')
+        return
+    end
+
+    afterConsumed()
+end
+
+RegisterNetEvent('djdrugs:client:tryUseDrug', function(itemName)
+    Effects.TryUse(itemName, nil)
+end)
+
+--- ox_inventory client export — items.lua: client.export = 'RESOURCE_FOLDER.useDrug'
+exports('useDrug', function(data, slot)
+    if not data or not data.name then return end
+    Effects.TryUse(data.name, data)
 end)
 
 AddEventHandler('onResourceStop', function(resource)
     if resource ~= GetCurrentResourceName() then return end
     Effects.Clear()
+end)
+
+CreateThread(function()
+    Wait(1500)
+    Utils.Debug(('effects ready — use export "%s.useDrug" in ox_inventory items'):format(GetCurrentResourceName()))
 end)
