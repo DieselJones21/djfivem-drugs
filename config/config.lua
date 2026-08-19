@@ -9,12 +9,14 @@ Config = {}
 
     To add a new drug later:
       1) Add an entry under Config.Drugs in config/drugs.lua
-      2) Add harvest / store / machine spots that grant its ingredients
+      2) Add harvest / machine spots that grant its ingredients
       3) Add the items to ox_inventory (see install/ox_inventory_items.lua)
 
     Harvest types:
       - 'bench'  = spawn a prop + 3rd eye it (all ingredient stations)
-      Stores stay as world zones (no custom bench props).
+
+    Store supply grabs are disabled (Config.Stores / Config.Machines empty).
+    Re-add entries there if you want convenience/hardware pickups again.
 ]]
 
 Config.Debug = false
@@ -115,7 +117,7 @@ Config.IngredientCooldown = 10
 --[[
     Admin boost events (ox_lib menu via /drugboost)
     Sell: multiplies street sale prices
-    Harvest: multiplies ingredient yields (harvest / stores / ice machines)
+    Harvest: multiplies ingredient yields from world harvest benches
 ]]
 Config.Boost = {
     command = 'drugboost',
@@ -136,110 +138,23 @@ Config.Boost = {
     defaultDuration = 60 * 60, -- 1 hour
 }
 
--- Convenience / supply store pickups (baggies, cups, sprite, acetone, etc.)
--- These use existing store interiors — no spawned bench props.
--- Set paid = true + price to charge cash; otherwise free grab.
-Config.Stores = {
-    {
-        id = 'store_grove',
-        label = 'Convenience Supplies',
-        coords = vec3(-47.52, -1758.87, 29.42),
-        size = vec3(1.4, 1.4, 2.0),
-        rotation = 50.0,
-        items = {
-            { item = 'baggies', label = 'Grab Baggies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-            { item = 'cups', label = 'Grab Cups', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-            { item = 'sprite', label = 'Grab Sprite', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-            { item = 'hard_candies', label = 'Grab Hard Candies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-        },
-    },
-    {
-        id = 'store_strawberry',
-        label = 'Convenience Supplies',
-        coords = vec3(25.74, -1346.72, 29.50),
-        size = vec3(1.4, 1.4, 2.0),
-        rotation = 0.0,
-        items = {
-            { item = 'baggies', label = 'Grab Baggies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-            { item = 'cups', label = 'Grab Cups', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-            { item = 'sprite', label = 'Grab Sprite', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-            { item = 'hard_candies', label = 'Grab Hard Candies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-        },
-    },
-    {
-        id = 'store_sandyshores',
-        label = 'Convenience Supplies',
-        coords = vec3(1960.54, 3741.01, 32.34),
-        size = vec3(1.4, 1.4, 2.0),
-        rotation = 300.0,
-        items = {
-            { item = 'baggies', label = 'Grab Baggies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-            { item = 'cups', label = 'Grab Cups', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-            { item = 'sprite', label = 'Grab Sprite', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-            { item = 'hard_candies', label = 'Grab Hard Candies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
-            { item = 'acetone', label = 'Grab Acetone', amount = { min = 5, max = 10 }, cooldown = 10, duration = 4000 },
-        },
-    },
-    {
-        id = 'hardware_city',
-        label = 'Hardware Supplies',
-        coords = vec3(46.66, -1749.72, 29.63),
-        size = vec3(1.4, 1.4, 2.0),
-        rotation = 50.0,
-        items = {
-            { item = 'acetone', label = 'Grab Acetone', amount = { min = 5, max = 10 }, cooldown = 10, duration = 4000 },
-        },
-    },
-}
+-- Convenience / hardware store supply grabs — disabled (no store ingredient gathering).
+-- Example entry shape if you re-enable later:
+-- {
+--     id = 'store_grove',
+--     label = 'Convenience Supplies',
+--     coords = vec3(-47.52, -1758.87, 29.42),
+--     size = vec3(1.4, 1.4, 2.0),
+--     rotation = 50.0,
+--     items = {
+--         { item = 'baggies', label = 'Grab Baggies', amount = { min = 5, max = 10 }, cooldown = 10, duration = 3500 },
+--     },
+-- }
+Config.Stores = {}
 
--- Ice machines (lean) — spawned machine props + 3rd eye
-Config.Machines = {
-    {
-        id = 'ice_machine_1',
-        label = 'Take Ice',
-        item = 'ice',
-        amount = { min = 5, max = 10 },
-        duration = 4000,
-        cooldown = 10,
-        coords = vec3(-53.12, -1756.90, 29.44),
-        heading = 50.0,
-        prop = {
-            model = `prop_bar_cooler_03`,
-            heading = 50.0,
-        },
-        anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer' },
-    },
-    {
-        id = 'ice_machine_2',
-        label = 'Take Ice',
-        item = 'ice',
-        amount = { min = 5, max = 10 },
-        duration = 4000,
-        cooldown = 10,
-        coords = vec3(28.40, -1349.20, 29.50),
-        heading = 0.0,
-        prop = {
-            model = `prop_bar_cooler_03`,
-            heading = 0.0,
-        },
-        anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer' },
-    },
-    {
-        id = 'ice_machine_3',
-        label = 'Take Ice',
-        item = 'ice',
-        amount = { min = 5, max = 10 },
-        duration = 4000,
-        cooldown = 10,
-        coords = vec3(1955.80, 3740.20, 32.34),
-        heading = 300.0,
-        prop = {
-            model = `prop_bar_cooler_03`,
-            heading = 300.0,
-        },
-        anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer' },
-    },
-}
+-- Ice machines at stores — disabled with store gathering.
+-- Re-add machine entries (prop + coords) if you want ice pickups again.
+Config.Machines = {}
 
 --[[
     World harvest spots
