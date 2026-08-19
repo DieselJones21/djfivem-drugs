@@ -38,6 +38,10 @@ function Bridge.AddItem(src, item, amount, metadata)
     return exports.ox_inventory:AddItem(src, item, amount, metadata)
 end
 
+function Bridge.RemoveItem(src, item, amount, metadata, slot)
+    return exports.ox_inventory:RemoveItem(src, item, amount, metadata, slot)
+end
+
 function Bridge.HasPermission(src, permission)
     local ok, result = pcall(function()
         return exports.qbx_core:HasPermission(src, permission)
