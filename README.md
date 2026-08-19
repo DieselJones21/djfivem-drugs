@@ -8,7 +8,6 @@ Built for **QBX (`qbx_core`) + ox_lib + ox_target + ox_inventory**.
 
 - Add new drugs from config only (no code changes)
 - Harvest props at ingredient stations (3rd eye)
-- Store supply grabs + ice machines
 - Processing benches for every drug
 - `/trap` street selling with chance-based haggling
 - Usable drug effects (armor / stamina — no screen FX on combat stims)
@@ -38,7 +37,7 @@ add_ace group.admin djdrugs.boost allow
 Admins run **`/drugboost`** (ox_lib menu):
 
 - Start **Sell boost** (2x / 3x / 4x) — street sale prices
-- Start **Harvest boost** (2x / 3x / 4x) — ingredient yields (benches, stores, ice)
+- Start **Harvest boost** (2x / 3x / 4x) — ingredient yields from harvest benches
 - Start **Both**
 - Stop sell / harvest / all
 - Durations: 30m / 1h / 2h / 4h (configurable)

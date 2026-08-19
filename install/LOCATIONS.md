@@ -17,7 +17,6 @@ Tune in `config/config.lua` and `config/drugs.lua`.
 | Step | Prop | Coords |
 |------|------|--------|
 | Weed buds | `prop_weed_01` | `99.71, -1978.33, 19.76` |
-| Baggies | store zone | Grove / Strawberry / Sandy |
 | Process | `bkr_prop_weed_table_01a` | `284.67, -1773.03, 27.06` |
 
 ## Cocaine
@@ -25,7 +24,6 @@ Tune in `config/config.lua` and `config/drugs.lua`.
 | Step | Prop | Coords |
 |------|------|--------|
 | Coca leaves | `prop_plant_01a` | `994.98, 1007.78, 241.00` |
-| Acetone / baggies | store zones | hardware + convenience |
 | Process | `bkr_prop_coke_table01a` | `-2950.20, 637.03, 23.18` |
 
 ## Lean
@@ -33,9 +31,12 @@ Tune in `config/config.lua` and `config/drugs.lua`.
 | Step | Prop | Coords |
 |------|------|--------|
 | Codeine | `prop_drug_bottle` | `-620.23, 323.26, 81.26` |
-| Ice | `prop_bar_cooler_03` | Grove / Strawberry / Sandy |
-| Cups / Sprite / Hard Candies | store zones | convenience stores |
 | Process | `prop_tool_bench02` | `-1784.34, -401.11, 45.47` |
+
+## Store supplies
+
+Convenience / hardware grabs and ice machines are **disabled** (`Config.Stores` / `Config.Machines` empty).
+Recipes may still list baggies, acetone, cups, sprite, ice, etc. — supply those another way or re-enable store entries.
 
 ## Honda Pills
 
