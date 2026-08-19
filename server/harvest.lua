@@ -16,6 +16,10 @@ RegisterNetEvent('djdrugs:server:harvest', function(spotId, entityKey)
     end
 
     local amount = Server.AmountFromConfig(spot.amount)
+    local mult = Boost.GetHarvestMultiplier()
+    if mult > 1 then
+        amount = math.max(1, math.floor(amount * mult + 0.5))
+    end
     if not Server.CanCarry(src, spot.item, amount) then
         Server.ClearCooldown(Server.harvestCooldown, src, cdKey)
         Server.Notify(src, 'You cannot carry that', 'error')
@@ -23,7 +27,8 @@ RegisterNetEvent('djdrugs:server:harvest', function(spotId, entityKey)
     end
 
     if Server.AddItem(src, spot.item, amount) then
-        Server.Notify(src, ('Collected %sx %s'):format(amount, spot.item), 'success')
+        local boostNote = mult > 1 and (' [%sx harvest boost]'):format(mult) or ''
+        Server.Notify(src, ('Collected %sx %s%s'):format(amount, spot.item, boostNote), 'success')
     else
         Server.ClearCooldown(Server.harvestCooldown, src, cdKey)
         Server.Notify(src, 'Could not add item', 'error')
@@ -57,6 +62,10 @@ RegisterNetEvent('djdrugs:server:storeTake', function(storeId, itemName)
     end
 
     local amount = Server.AmountFromConfig(entry.amount or Config.IngredientAmount)
+    local mult = Boost.GetHarvestMultiplier()
+    if mult > 1 then
+        amount = math.max(1, math.floor(amount * mult + 0.5))
+    end
     if entry.paid and entry.price and entry.price > 0 then
         if Server.GetMoney(src) < entry.price then
             Server.ClearCooldown(Server.storeCooldown, src, cdKey)
@@ -77,7 +86,8 @@ RegisterNetEvent('djdrugs:server:storeTake', function(storeId, itemName)
     end
 
     if Server.AddItem(src, entry.item, amount) then
-        Server.Notify(src, ('Got %sx %s'):format(amount, entry.item), 'success')
+        local boostNote = mult > 1 and (' [%sx harvest boost]'):format(mult) or ''
+        Server.Notify(src, ('Got %sx %s%s'):format(amount, entry.item, boostNote), 'success')
     else
         Server.ClearCooldown(Server.storeCooldown, src, cdKey)
         Server.Notify(src, 'Could not add item', 'error')
@@ -101,6 +111,10 @@ RegisterNetEvent('djdrugs:server:machine', function(machineId)
     end
 
     local amount = Server.AmountFromConfig(machine.amount)
+    local mult = Boost.GetHarvestMultiplier()
+    if mult > 1 then
+        amount = math.max(1, math.floor(amount * mult + 0.5))
+    end
     if not Server.CanCarry(src, machine.item, amount) then
         Server.ClearCooldown(Server.machineCooldown, src, machine.id)
         Server.Notify(src, 'You cannot carry that', 'error')
@@ -108,7 +122,8 @@ RegisterNetEvent('djdrugs:server:machine', function(machineId)
     end
 
     if Server.AddItem(src, machine.item, amount) then
-        Server.Notify(src, ('Got %sx %s'):format(amount, machine.item), 'success')
+        local boostNote = mult > 1 and (' [%sx harvest boost]'):format(mult) or ''
+        Server.Notify(src, ('Got %sx %s%s'):format(amount, machine.item, boostNote), 'success')
     else
         Server.ClearCooldown(Server.machineCooldown, src, machine.id)
         Server.Notify(src, 'Could not add item', 'error')

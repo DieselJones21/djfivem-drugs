@@ -115,6 +115,30 @@ Config.StressGainEvent = nil
 Config.IngredientAmount = { min = 5, max = 10 }
 Config.IngredientCooldown = 10
 
+--[[
+    Admin boost events (ox_lib menu via /drugboost)
+    Sell: multiplies street sale prices
+    Harvest: multiplies ingredient yields (harvest / stores / ice machines)
+]]
+Config.Boost = {
+    command = 'drugboost',
+    description = 'Open drug boost event admin menu',
+    -- ACE permission (server.cfg): add_ace group.admin djdrugs.boost allow
+    ace = 'djdrugs.boost',
+    -- QBX permission names that can also open the menu
+    permissions = { 'admin', 'god' },
+    announce = true, -- notify all players when events start/stop
+    -- Options shown in the ox_lib UI
+    multipliers = { 2, 3, 4 },
+    durations = {
+        { label = '30 minutes', seconds = 30 * 60 },
+        { label = '1 hour', seconds = 60 * 60 },
+        { label = '2 hours', seconds = 2 * 60 * 60 },
+        { label = '4 hours', seconds = 4 * 60 * 60 },
+    },
+    defaultDuration = 60 * 60, -- 1 hour
+}
+
 Config.Stores = {
     {
         id = 'store_grove',

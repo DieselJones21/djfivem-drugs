@@ -50,6 +50,7 @@ local function offerPayload(offer)
         attempts = offer.attempts,
         maxAttempts = offer.maxAttempts,
         haggleEnabled = offer.haggleEnabled,
+        boostMultiplier = offer.boostMultiplier or 1,
     }
 end
 
@@ -98,8 +99,11 @@ lib.callback.register('djdrugs:server:createOffer', function(source)
 
     local quantity = math.random(minAsk, maxAsk)
     local haggle = Config.Trap.haggle or {}
-    local priceEach = biasedPrice(sell.minPrice, sell.maxPrice, haggle.openingBias or 0.35)
-    priceEach = math.max(sell.minPrice, math.min(sell.maxPrice, priceEach))
+    local mult = Boost.GetSellMultiplier()
+    local minPrice = math.floor((sell.minPrice * mult) + 0.5)
+    local maxPrice = math.floor((sell.maxPrice * mult) + 0.5)
+    local priceEach = biasedPrice(minPrice, maxPrice, haggle.openingBias or 0.35)
+    priceEach = math.max(minPrice, math.min(maxPrice, priceEach))
     local total = priceEach * quantity
     local token = newToken()
 
@@ -111,8 +115,9 @@ lib.callback.register('djdrugs:server:createOffer', function(source)
         quantity = quantity,
         priceEach = priceEach,
         total = total,
-        minPrice = sell.minPrice,
-        maxPrice = sell.maxPrice,
+        minPrice = minPrice,
+        maxPrice = maxPrice,
+        boostMultiplier = mult,
         attempts = 0,
         maxAttempts = haggle.maxAttempts or 2,
         haggleEnabled = haggle.enabled ~= false,
@@ -239,5 +244,11 @@ lib.callback.register('djdrugs:server:completeSale', function(source, token)
         end
     end
 
-    return true, ('Sold %sx %s for $%s ($%s each)'):format(offer.quantity, offer.label, offer.total, offer.priceEach)
+    return true, ('Sold %sx %s for $%s ($%s each)%s'):format(
+        offer.quantity,
+        offer.label,
+        offer.total,
+        offer.priceEach,
+        (offer.boostMultiplier and offer.boostMultiplier > 1) and (' [%sx boost]'):format(offer.boostMultiplier) or ''
+    )
 end)
