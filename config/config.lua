@@ -100,9 +100,6 @@ Config.Trap = {
     },
 }
 
--- Convenience / supply store pickups (baggies, cups, sprite, acetone, etc.)
--- These use existing store interiors — no spawned bench props.
--- Set paid = true + price to charge cash; otherwise free grab.
 -- Global usable drug effects (per-drug effects live under Config.Drugs[].effects)
 Config.UseEffects = true
 Config.EffectCooldown = 12 -- seconds between uses
@@ -115,6 +112,33 @@ Config.StressGainEvent = nil
 Config.IngredientAmount = { min = 5, max = 10 }
 Config.IngredientCooldown = 10
 
+--[[
+    Admin boost events (ox_lib menu via /drugboost)
+    Sell: multiplies street sale prices
+    Harvest: multiplies ingredient yields (harvest / stores / ice machines)
+]]
+Config.Boost = {
+    command = 'drugboost',
+    description = 'Open drug boost event admin menu',
+    -- ACE permission (server.cfg): add_ace group.admin djdrugs.boost allow
+    ace = 'djdrugs.boost',
+    -- QBX permission names that can also open the menu
+    permissions = { 'admin', 'god' },
+    announce = true, -- notify all players when events start/stop
+    -- Options shown in the ox_lib UI
+    multipliers = { 2, 3, 4 },
+    durations = {
+        { label = '30 minutes', seconds = 30 * 60 },
+        { label = '1 hour', seconds = 60 * 60 },
+        { label = '2 hours', seconds = 2 * 60 * 60 },
+        { label = '4 hours', seconds = 4 * 60 * 60 },
+    },
+    defaultDuration = 60 * 60, -- 1 hour
+}
+
+-- Convenience / supply store pickups (baggies, cups, sprite, acetone, etc.)
+-- These use existing store interiors — no spawned bench props.
+-- Set paid = true + price to charge cash; otherwise free grab.
 Config.Stores = {
     {
         id = 'store_grove',
@@ -326,11 +350,11 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 6000,
         cooldown = 10,
-        coords = vec3(-1485.49, -909.42, 9.02),
-        heading = 90.0,
+        coords = vec3(994.98, 1007.78, 241.00),
+        heading = 18.95,
         prop = {
             model = `prop_plant_01a`, -- leafy plant
-            heading = 90.0,
+            heading = 18.95,
         },
         anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
         blip = { enabled = false, sprite = 501, color = 0, label = 'Coca Leaves' },
@@ -352,6 +376,7 @@ Config.Harvest = {
         prop = {
             model = `prop_drug_bottle`, -- medicine bottle
             heading = 340.0,
+            placeOnGround = false,
         },
         anim = { dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', clip = 'machinic_loop_mechandplayer' },
         blip = { enabled = false, sprite = 403, color = 27, label = 'Codeine' },
@@ -368,11 +393,11 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 6500,
         cooldown = 10,
-        coords = vec3(353.45, -1415.80, 32.50),
-        heading = 50.0,
+        coords = vec3(-1344.20, -1154.58, 4.49),
+        heading = 92.66,
         prop = {
-            model = `prop_cs_pills`, -- pill bottle
-            heading = 50.0,
+            model = `prop_barrel_02b`,
+            heading = 92.66,
             placeOnGround = false,
         },
         anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
@@ -386,11 +411,11 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 7000,
         cooldown = 10,
-        coords = vec3(144.20, -2203.85, 4.70),
-        heading = 180.0,
+        coords = vec3(-1606.26, -1050.48, 6.02),
+        heading = 48.87,
         prop = {
             model = `prop_barrel_02b`, -- powder barrel
-            heading = 180.0,
+            heading = 48.87,
         },
         anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
         blip = { enabled = false, sprite = 51, color = 46, label = 'Honda Formula' },
@@ -403,11 +428,11 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 7500,
         cooldown = 10,
-        coords = vec3(-1164.55, -2036.90, 13.15),
-        heading = 315.0,
+        coords = vec3(-1278.79, -838.92, 16.15),
+        heading = 315.28,
         prop = {
             model = `prop_barrel_exp_01a`, -- chemical extract barrel
-            heading = 315.0,
+            heading = 315.28,
         },
         anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
         blip = { enabled = false, sprite = 51, color = 46, label = 'Honda Extract' },
@@ -424,11 +449,11 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 6500,
         cooldown = 10,
-        coords = vec3(892.35, -2172.40, 32.28),
-        heading = 175.0,
+        coords = vec3(-433.27, 4041.09, 82.83),
+        heading = 16.08,
         prop = {
             model = `prop_feed_sack_01`, -- powder sack
-            heading = 175.0,
+            heading = 16.98,
         },
         anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
         blip = { enabled = false, sprite = 499, color = 1, label = 'Stab Powder' },
@@ -441,11 +466,11 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 6000,
         cooldown = 10,
-        coords = vec3(46.80, -1749.55, 29.63),
-        heading = 50.0,
+        coords = vec3(91.13, 3749.69, 40.77),
+        heading = 345.03,
         prop = {
             model = `prop_candy_pqs`, -- candy box
-            heading = 50.0,
+            heading = 345.03,
         },
         anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
         blip = { enabled = false, sprite = 499, color = 1, label = 'Stab Candy' },
@@ -458,18 +483,18 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 7000,
         cooldown = 10,
-        coords = vec3(1208.55, -3114.80, 5.54),
-        heading = 90.0,
+        coords = vec3(358.24, 3398.84, 36.40),
+        heading = 27.90,
         prop = {
             model = `prop_barrel_01a`, -- liquid barrel
-            heading = 90.0,
+            heading = 27.90,
         },
         anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
         blip = { enabled = false, sprite = 499, color = 1, label = 'Concentrated Juice' },
     },
 
     --------------------------------------------------
-    -- Black Lotus ingredients (placeholder coords)
+    -- Black Lotus ingredients
     --------------------------------------------------
     {
         id = 'lotus_powder',
@@ -479,11 +504,11 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 6500,
         cooldown = 10,
-        coords = vec3(380.55, -1835.20, 28.75),
-        heading = 45.0,
+        coords = vec3(57.10, -98.81, 58.20),
+        heading = 121.20,
         prop = {
             model = `prop_feed_sack_01`, -- powder sack
-            heading = 45.0,
+            heading = 120.20,
         },
         anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
         blip = { enabled = false, sprite = 499, color = 40, label = 'Lotus Powder' },
@@ -496,11 +521,11 @@ Config.Harvest = {
         amount = { min = 5, max = 10 },
         duration = 7500,
         cooldown = 10,
-        coords = vec3(172.40, -1717.85, 29.35),
-        heading = 140.0,
+        coords = vec3(764.61, -2197.83, 20.78),
+        heading = 169.79,
         prop = {
             model = `prop_barrel_exp_01a`, -- dark chemical barrel
-            heading = 140.0,
+            heading = 169.79,
         },
         anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
         blip = { enabled = false, sprite = 499, color = 40, label = 'Black Liquid Extract' },

@@ -38,6 +38,25 @@ function Bridge.AddItem(src, item, amount, metadata)
     return exports.ox_inventory:AddItem(src, item, amount, metadata)
 end
 
-function Bridge.RemoveItem(src, item, amount)
-    return exports.ox_inventory:RemoveItem(src, item, amount)
+function Bridge.HasPermission(src, permission)
+    local ok, result = pcall(function()
+        return exports.qbx_core:HasPermission(src, permission)
+    end)
+    return ok and result == true
+end
+
+function Bridge.IsBoostAdmin(src)
+    local ace = Config.Boost and Config.Boost.ace
+    if ace and IsPlayerAceAllowed(src, ace) then
+        return true
+    end
+
+    local perms = Config.Boost and Config.Boost.permissions or { 'admin', 'god' }
+    for i = 1, #perms do
+        if Bridge.HasPermission(src, perms[i]) then
+            return true
+        end
+    end
+
+    return false
 end

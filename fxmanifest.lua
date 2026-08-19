@@ -5,7 +5,7 @@ lua54 'yes'
 name 'djfivem-drugs'
 author 'DieselJones21'
 description 'Config-driven harvest → process → /trap sell drug economy (QBX + ox_inventory)'
-version '1.4.0'
+version '1.5.0'
 
 shared_scripts {
     '@ox_lib/init.lua',
@@ -21,6 +21,7 @@ client_scripts {
     'client/process.lua',
     'client/sell.lua',
     'client/effects.lua',
+    'client/boost.lua',
 }
 
 server_scripts {
@@ -29,6 +30,7 @@ server_scripts {
     'server/process.lua',
     'server/sell.lua',
     'server/effects.lua',
+    'server/boost.lua',
 }
 
 dependencies {

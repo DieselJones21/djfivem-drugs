@@ -114,8 +114,15 @@ local function openDealMenu()
     local options = {
         {
             title = ('Accept $%s total'):format(offer.total),
-            description = ('%sx %s @ $%s each (range $%s–$%s)'):format(
-                offer.quantity, offer.label, offer.priceEach, offer.minPrice, offer.maxPrice
+            description = ('%sx %s @ $%s each (range $%s–$%s)%s'):format(
+                offer.quantity,
+                offer.label,
+                offer.priceEach,
+                offer.minPrice,
+                offer.maxPrice,
+                (offer.boostMultiplier and offer.boostMultiplier > 1)
+                    and (' — %sx SELL BOOST'):format(offer.boostMultiplier)
+                    or ''
             ),
             icon = 'fa-solid fa-handshake',
             onSelect = function()
