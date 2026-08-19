@@ -33,12 +33,12 @@ Config.Drugs = {
         },
         process = {
             label = 'Mix Pink Energy',
-            coords = vec3(880.8, -959.84, 26.86),
-            heading = 200.0,
+            coords = vec3(856.71, -943.52, 25.28),
+            heading = 268.68,
             duration = 14000,
             prop = {
                 model = `bkr_prop_meth_table01a`,
-                heading = 200.0,
+                heading = 268.68,
             },
             anim = {
                 dict = 'anim@amb@business@coc@coc_unpack_cut@',
@@ -78,12 +78,12 @@ Config.Drugs = {
         },
         process = {
             label = 'Bag Weed',
-            coords = vec3(-417.21, -2176.31, 9.32),
-            heading = 0.0,
+            coords = vec3(284.67, -1773.03, 27.06),
+            heading = 53.19,
             duration = 9000,
             prop = {
                 model = `bkr_prop_weed_table_01a`,
-                heading = 0.0,
+                heading = 53.19,
             },
             anim = {
                 dict = 'mini@repair',
@@ -124,12 +124,12 @@ Config.Drugs = {
         },
         process = {
             label = 'Cook Cocaine',
-            coords = vec3(-1277.08, -1357.38, 3.3),
-            heading = 45.0,
+            coords = vec3(-2950.20, 637.03, 23.18),
+            heading = 108.26,
             duration = 12000,
             prop = {
                 model = `bkr_prop_coke_table01a`,
-                heading = 45.0,
+                heading = 108.26,
             },
             anim = {
                 dict = 'anim@amb@business@coc@coc_unpack_cut@',
@@ -173,12 +173,12 @@ Config.Drugs = {
         },
         process = {
             label = 'Mix Lean',
-            coords = vec3(-427.11, 292.68, 82.23),
-            heading = 300.0,
+            coords = vec3(-1784.34, -401.11, 45.47),
+            heading = 187.96,
             duration = 10000,
             prop = {
                 model = `prop_tool_bench02`,
-                heading = 300.0,
+                heading = 187.96,
             },
             anim = {
                 dict = 'mini@repair',
@@ -219,12 +219,12 @@ Config.Drugs = {
         },
         process = {
             label = 'Press Honda Pills',
-            coords = vec3(1391.55, 3605.20, 38.94),
-            heading = 110.0,
+            coords = vec3(-1486.62, -909.08, 9.02),
+            heading = 48.52,
             duration = 11000,
             prop = {
                 model = `prop_tool_bench02`,
-                heading = 110.0,
+                heading = 48.52,
             },
             anim = {
                 dict = 'mini@repair',
@@ -265,12 +265,12 @@ Config.Drugs = {
         },
         process = {
             label = 'Mix Stab Juice',
-            coords = vec3(195.40, -933.55, 30.69),
-            heading = 160.0,
+            coords = vec3(384.63, 3554.60, 32.42),
+            heading = 172.92,
             duration = 11000,
             prop = {
                 model = `prop_tool_bench02`,
-                heading = 160.0,
+                heading = 172.92,
             },
             anim = {
                 dict = 'mini@repair',
@@ -311,13 +311,12 @@ Config.Drugs = {
         },
         process = {
             label = 'Brew Black Lotus',
-            -- Placeholder coords — edit to fit your map
-            coords = vec3(1394.20, 3608.55, 38.94),
-            heading = 200.0,
+            coords = vec3(1092.77, -154.72, 54.64),
+            heading = 66.12,
             duration = 12000,
             prop = {
                 model = `bkr_prop_meth_table01a`,
-                heading = 200.0,
+                heading = 66.12,
             },
             anim = {
                 dict = 'anim@amb@business@coc@coc_unpack_cut@',
