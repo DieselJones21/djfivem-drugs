@@ -1,8 +1,27 @@
 Utils = {}
 
+local DEFAULT_FRAMEWORK_MONEY = {
+    cash = true,
+    bank = true,
+    crypto = true,
+}
+
 function Utils.Debug(...)
     if not Config or not Config.Debug then return end
     print('[djfivem-drugs]', ...)
+end
+
+-- QBX accounts go through qbx_core:AddMoney. Everything else (black_money)
+-- is an ox_inventory item — AddMoney('black_money') always fails on stock QBX.
+function Utils.IsFrameworkMoney(moneyType)
+    if type(moneyType) ~= 'string' or moneyType == '' then
+        return false
+    end
+    local configured = Config and Config.FrameworkMoneyTypes
+    if type(configured) == 'table' then
+        return configured[moneyType] == true
+    end
+    return DEFAULT_FRAMEWORK_MONEY[moneyType] == true
 end
 
 function Utils.RandomInt(min, max)

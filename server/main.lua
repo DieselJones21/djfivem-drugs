@@ -30,10 +30,32 @@ function Server.RemoveItem(src, item, amount)
     return Bridge.RemoveItem(src, item, amount)
 end
 
+function Server.CanAddPayout(src, moneyType, amount)
+    local account = moneyType or Config.MoneyType or 'cash'
+    if Utils.IsFrameworkMoney(account) then
+        return true
+    end
+    return Server.CanCarry(src, account, amount) == true
+end
+
 function Server.AddMoney(src, amount, moneyType)
     local account = moneyType or Config.MoneyType or 'cash'
-    local ok = Bridge.AddMoney(src, account, amount, 'djdrugs-sale')
-    return ok ~= false
+    if Utils.IsFrameworkMoney(account) then
+        local ok = Bridge.AddMoney(src, account, amount, 'djdrugs-sale')
+        return ok ~= false
+    end
+
+    -- Dirty cash (black_money) and any other non-QBX type are inventory items
+    if not Server.CanAddPayout(src, account, amount) then
+        Utils.Debug('payout cannot carry', account, tostring(amount))
+        return false
+    end
+    local added = Server.AddItem(src, account, amount)
+    if not added then
+        Utils.Debug('payout AddItem failed', account, tostring(amount))
+        return false
+    end
+    return true
 end
 
 function Server.RemoveMoney(src, amount)
