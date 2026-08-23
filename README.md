@@ -48,15 +48,15 @@ Permission: ACE `djdrugs.boost` **or** QBX `admin`/`god` (see `Config.Boost`).
 
 ## Default drugs
 
-| Drug | Ingredients | Sell/unit |
-|------|-------------|-----------|
-| **Pink Energy** | crystals, solvent, chug jars, caffeine | $550–$900 |
-| **Weed** | weed buds + baggies | $80–$160 |
-| **Cocaine** | coca leaves + acetone + baggies | $250–$420 |
-| **Lean** | codeine + ice + cups + sprite + hard candies | $140–$260 |
-| **Honda Pills** | capsules + formula + extract | $500–$850 |
-| **Stab Juice** | stab powder + stab candy + concentrated juice | $500–$850 |
-| **Black Lotus** | lotus powder + black liquid extract | $500–$850 |
+| Drug | Ingredients | Sell/unit | Payout |
+|------|-------------|-----------|--------|
+| **Pink Energy** | crystals, solvent, chug jars, caffeine | $550–$900 | black_money |
+| **Weed** | weed buds + baggies | $80–$160 | cash |
+| **Cocaine** | coca leaves + acetone + baggies | $250–$420 | black_money |
+| **Lean** | codeine + ice + cups + sprite + hard candies | $140–$260 | black_money |
+| **Honda Pills** | capsules + formula + extract | $500–$850 | black_money |
+| **Stab Juice** | stab powder + stab candy + concentrated juice | $500–$850 | black_money |
+| **Black Lotus** | lotus powder + black liquid extract | $500–$850 | black_money |
 
 ## Combat stim effects
 
