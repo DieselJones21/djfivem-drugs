@@ -22,8 +22,10 @@ Config = {}
 Config.Debug = false
 Config.Locale = 'en'
 
--- Money account used when selling ("cash" or "bank")
+-- Default money account for sales without a per-drug override (weed uses this)
 Config.MoneyType = 'cash'
+-- Hard drugs pay this account unless sell.moneyType is set on the drug
+Config.DirtyMoneyType = 'black_money'
 
 -- Global harvest / process settings
 Config.InteractDistance = 2.0
@@ -251,7 +253,7 @@ Config.Harvest = {
             heading = 0.0,
         },
         anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
-        blip = { enabled = false, sprite = 469, color = 2, label = 'Weed Buds' },
+        blip = { enabled = true, sprite = 469, color = 2, label = 'Weed Buds' },
     },
 
     --------------------------------------------------

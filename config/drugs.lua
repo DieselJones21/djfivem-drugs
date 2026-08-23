@@ -49,6 +49,7 @@ Config.Drugs = {
         },
         sell = {
             enabled = true,
+            moneyType = 'black_money',
             minPrice = 550,
             maxPrice = 900,
             minQty = 1,
@@ -94,6 +95,7 @@ Config.Drugs = {
         },
         sell = {
             enabled = true,
+            moneyType = 'cash', -- only weed pays clean cash
             minPrice = 80,
             maxPrice = 160,
             minQty = 1,
@@ -140,6 +142,7 @@ Config.Drugs = {
         },
         sell = {
             enabled = true,
+            moneyType = 'black_money',
             minPrice = 250,
             maxPrice = 420,
             minQty = 1,
@@ -189,6 +192,7 @@ Config.Drugs = {
         },
         sell = {
             enabled = true,
+            moneyType = 'black_money',
             minPrice = 140,
             maxPrice = 260,
             minQty = 1,
@@ -235,6 +239,7 @@ Config.Drugs = {
         },
         sell = {
             enabled = true,
+            moneyType = 'black_money',
             minPrice = 500,
             maxPrice = 850,
             minQty = 1,
@@ -281,6 +286,7 @@ Config.Drugs = {
         },
         sell = {
             enabled = true,
+            moneyType = 'black_money',
             minPrice = 500,
             maxPrice = 850,
             minQty = 1,
@@ -327,6 +333,7 @@ Config.Drugs = {
         },
         sell = {
             enabled = true,
+            moneyType = 'black_money',
             minPrice = 500,
             maxPrice = 850,
             minQty = 1,

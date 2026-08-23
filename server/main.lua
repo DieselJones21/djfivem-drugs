@@ -30,8 +30,9 @@ function Server.RemoveItem(src, item, amount)
     return Bridge.RemoveItem(src, item, amount)
 end
 
-function Server.AddMoney(src, amount)
-    local ok = Bridge.AddMoney(src, Config.MoneyType, amount, 'djdrugs-sale')
+function Server.AddMoney(src, amount, moneyType)
+    local account = moneyType or Config.MoneyType or 'cash'
+    local ok = Bridge.AddMoney(src, account, amount, 'djdrugs-sale')
     return ok ~= false
 end
 
