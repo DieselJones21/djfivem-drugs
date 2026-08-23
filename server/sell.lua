@@ -106,6 +106,10 @@ lib.callback.register('djdrugs:server:createOffer', function(source)
     priceEach = math.max(minPrice, math.min(maxPrice, priceEach))
     local total = priceEach * quantity
     local token = newToken()
+    -- Weed stays clean cash; everything else pays dirty money by default
+    local moneyType = sell.moneyType
+        or (pick.id == 'weed' and (Config.MoneyType or 'cash'))
+        or (Config.DirtyMoneyType or 'black_money')
 
     Server.offers[source] = {
         token = token,
@@ -117,6 +121,7 @@ lib.callback.register('djdrugs:server:createOffer', function(source)
         total = total,
         minPrice = minPrice,
         maxPrice = maxPrice,
+        moneyType = moneyType,
         boostMultiplier = mult,
         attempts = 0,
         maxAttempts = haggle.maxAttempts or 2,
@@ -231,7 +236,7 @@ lib.callback.register('djdrugs:server:completeSale', function(source, token)
         return false, 'Could not remove product'
     end
 
-    if not Server.AddMoney(source, offer.total) then
+    if not Server.AddMoney(source, offer.total, offer.moneyType) then
         Server.AddItem(source, offer.item, offer.quantity)
         return false, 'Payment failed'
     end
@@ -244,11 +249,13 @@ lib.callback.register('djdrugs:server:completeSale', function(source, token)
         end
     end
 
-    return true, ('Sold %sx %s for $%s ($%s each)%s'):format(
+    local dirty = offer.moneyType and offer.moneyType ~= (Config.MoneyType or 'cash')
+    return true, ('Sold %sx %s for $%s ($%s each)%s%s'):format(
         offer.quantity,
         offer.label,
         offer.total,
         offer.priceEach,
+        dirty and ' (dirty)' or '',
         (offer.boostMultiplier and offer.boostMultiplier > 1) and (' [%sx boost]'):format(offer.boostMultiplier) or ''
     )
 end)

@@ -10,6 +10,8 @@ Built for **QBX (`qbx_core`) + ox_lib + ox_target + ox_inventory**.
 - Harvest props at ingredient stations (3rd eye)
 - Processing benches for every drug
 - `/trap` street selling with chance-based haggling
+- Weed sells for **cash**; all other drugs sell for **black_money**
+- Weed harvest field map blip (other drug spots stay unmarked)
 - Usable drug effects (armor / stamina — no screen FX on combat stims)
 - **Admin boost events** (`/drugboost`) — 2x/3x/4x sell and/or harvest for timed events
 

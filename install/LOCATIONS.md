@@ -16,7 +16,7 @@ Tune in `config/config.lua` and `config/drugs.lua`.
 
 | Step | Prop | Coords |
 |------|------|--------|
-| Weed buds | `prop_weed_01` | `99.71, -1978.33, 19.76` |
+| Weed buds *(map blip on)* | `prop_weed_01` | `99.71, -1978.33, 19.76` |
 | Process | `bkr_prop_weed_table_01a` | `284.67, -1773.03, 27.06` |
 
 ## Cocaine
