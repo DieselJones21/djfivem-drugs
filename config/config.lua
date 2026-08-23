@@ -22,10 +22,21 @@ Config = {}
 Config.Debug = false
 Config.Locale = 'en'
 
--- Default money account for sales without a per-drug override (weed uses this)
+-- Default QBX account for sales without a per-drug override (weed uses this)
+-- Valid QBX accounts: cash, bank, crypto
 Config.MoneyType = 'cash'
--- Hard drugs pay this account unless sell.moneyType is set on the drug
+-- Hard drugs pay this unless sell.moneyType is set on the drug.
+-- On QBX + ox_inventory this is an *inventory item*, not a QBX account.
+-- qbx_core:AddMoney('black_money') fails (Payment failed) because stock QBX
+-- only has cash / bank / crypto.
 Config.DirtyMoneyType = 'black_money'
+-- Types paid via qbx_core:AddMoney. Any other moneyType is given as an item.
+-- Add black_money here only if you registered it as a custom QBX account.
+Config.FrameworkMoneyTypes = {
+    cash = true,
+    bank = true,
+    crypto = true,
+}
 
 -- Global harvest / process settings
 Config.InteractDistance = 2.0

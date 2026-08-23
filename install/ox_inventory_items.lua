@@ -12,6 +12,12 @@ local drugUse = {
 }
 
 return {
+    -- Dirty cash from hard-drug /trap sales.
+    -- Skip this entry if ox_inventory (or your economy pack) already defines it.
+    ['black_money'] = {
+        label = 'Dirty Money',
+    },
+
     -- Ingredients: Pink Energy
     ['pink_crystal_shards'] = {
         label = 'Pink Crystal Shards',
