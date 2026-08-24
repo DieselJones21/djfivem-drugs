@@ -12,6 +12,7 @@ Built for **QBX (`qbx_core`) + ox_lib + ox_target + ox_inventory**.
 - `/trap` street selling with chance-based haggling
 - Weed sells for **cash** (QBX account); all other drugs sell for **black_money** (ox_inventory item)
 - Weed harvest field map blip (other drug spots stay unmarked)
+- **Island Pills** — Cayo Perico exclusive, $1800–$2800 dirty (highest pay)
 - Usable drug effects (armor / stamina — no screen FX on combat stims)
 - **Admin boost events** (`/drugboost`) — 2x/3x/4x sell and/or harvest for timed events
 
@@ -60,6 +61,9 @@ Permission: ACE `djdrugs.boost` **or** QBX `admin`/`god` (see `Config.Boost`).
 | **Honda Pills** | capsules + formula + extract | $500–$850 | black_money |
 | **Stab Juice** | stab powder + stab candy + concentrated juice | $500–$850 | black_money |
 | **Black Lotus** | lotus powder + black liquid extract | $500–$850 | black_money |
+| **Island Pills** | cayo leaf + coral powder + island resin + perico capsules | $1800–$2800 | black_money |
+
+All **Island Pills** harvest + process benches are on **Cayo Perico** (airstrip, docks, crop fields, east shore). The island must be streamed on your server (`bob74_ipl` or equivalent). Existing Los Santos spots are unchanged.
 
 ## Combat stim effects
 
@@ -67,6 +71,11 @@ Permission: ACE `djdrugs.boost` **or** QBX `admin`/`god` (see `Config.Boost`).
 - **+25% armor**
 - **45 seconds infinite stamina**
 - **No screen effects / timecycle / shake**
+
+**Island Pills** is a stronger Cayo exclusive:
+- **+40% armor**
+- **60 seconds infinite stamina**
+- **No screen effects**
 
 Finished drugs need:
 ```lua

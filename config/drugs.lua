@@ -6,6 +6,10 @@
 
     Combat stim effect (Pink Energy / Honda Pills / Black Lotus):
       25% armor + 45s infinite stamina — no screen FX
+
+    Island Pills (Cayo Perico exclusive):
+      40% armor + 60s infinite stamina — no screen FX
+      4 ingredients, all harvest + process spots on the island
 ]]
 
 -- Shared combat stim (armor + stamina only)
@@ -347,6 +351,55 @@ Config.Drugs = {
             anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle', flag = 49 },
             armorPercent = COMBAT_STIM.armorPercent,
             stamina = COMBAT_STIM.stamina,
+        },
+    },
+
+    --------------------------------------------------
+    -- Island Pills (Cayo Perico exclusive)
+    --------------------------------------------------
+    island_pills = {
+        label = 'Island Pills',
+        item = 'island_pills',
+        description = 'Pressed island pills — Cayo exclusive, top street pay',
+        ingredients = {
+            { item = 'cayo_leaf', amount = 5 },
+            { item = 'coral_powder', amount = 5 },
+            { item = 'island_resin', amount = 5 },
+            { item = 'perico_capsules', amount = 5 },
+        },
+        process = {
+            label = 'Press Island Pills',
+            coords = vec3(5071.07, -4639.87, 2.11), -- north dock
+            heading = 30.0,
+            duration = 15000,
+            prop = {
+                model = `prop_tool_bench02`,
+                heading = 30.0,
+            },
+            anim = {
+                dict = 'mini@repair',
+                clip = 'fixing_a_ped',
+            },
+            output = { item = 'island_pills', amount = 7 },
+            blip = { enabled = false, sprite = 51, color = 5, label = 'Island Pill Press' },
+        },
+        sell = {
+            enabled = true,
+            moneyType = 'black_money',
+            minPrice = 1800,
+            maxPrice = 2800,
+            minQty = 1,
+            maxQty = 3,
+        },
+        effects = {
+            enabled = true,
+            label = 'Popping Island Pills',
+            useTime = 3000,
+            duration = 60000,
+            anim = { dict = 'mp_player_inteat@burger', clip = 'mp_player_int_eat_burger', flag = 49 },
+            armorPercent = 40,
+            stamina = true,
+            -- no screen FX
         },
     },
 }
