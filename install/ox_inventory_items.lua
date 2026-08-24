@@ -173,6 +173,36 @@ return {
         description = 'Dark liquid extract for Black Lotus',
     },
 
+    -- Ingredients: Island Pills (Cayo Perico)
+    ['cayo_leaf'] = {
+        label = 'Cayo Leaf',
+        weight = 35,
+        stack = true,
+        close = true,
+        description = 'Tropical leaves harvested on Cayo Perico',
+    },
+    ['coral_powder'] = {
+        label = 'Coral Powder',
+        weight = 40,
+        stack = true,
+        close = true,
+        description = 'Ground coral dust from the island shore',
+    },
+    ['island_resin'] = {
+        label = 'Island Resin',
+        weight = 50,
+        stack = true,
+        close = true,
+        description = 'Sticky resin tapped at the Cayo docks',
+    },
+    ['perico_capsules'] = {
+        label = 'Perico Capsules',
+        weight = 20,
+        stack = true,
+        close = true,
+        description = 'Empty capsules for pressing Island Pills',
+    },
+
     -- Finished products (usable)
     ['pink_energy'] = {
         label = 'Pink Energy',
@@ -228,6 +258,14 @@ return {
         stack = true,
         close = true,
         description = 'Combat stim — 25% armor + 45s stamina',
+        server = drugUse,
+    },
+    ['island_pills'] = {
+        label = 'Island Pills',
+        weight = 25,
+        stack = true,
+        close = true,
+        description = 'Cayo exclusive — 40% armor + 60s stamina',
         server = drugUse,
     },
 }

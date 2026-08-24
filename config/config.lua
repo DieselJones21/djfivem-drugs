@@ -447,4 +447,76 @@ Config.Harvest = {
         anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
         blip = { enabled = false, sprite = 499, color = 40, label = 'Black Liquid Extract' },
     },
+
+    --------------------------------------------------
+    -- Island Pills ingredients (Cayo Perico only)
+    --------------------------------------------------
+    {
+        id = 'cayo_leaf',
+        type = 'bench',
+        item = 'cayo_leaf',
+        label = 'Pick Cayo Leaves',
+        amount = { min = 5, max = 10 },
+        duration = 6500,
+        cooldown = 10,
+        coords = vec3(5365.07, -5438.82, 47.83), -- crop fields
+        heading = 57.0,
+        prop = {
+            model = `prop_plant_01a`, -- tropical leaf plant
+            heading = 57.0,
+        },
+        anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
+        blip = { enabled = false, sprite = 51, color = 5, label = 'Cayo Leaves' },
+    },
+    {
+        id = 'coral_powder',
+        type = 'bench',
+        item = 'coral_powder',
+        label = 'Grind Coral Powder',
+        amount = { min = 5, max = 10 },
+        duration = 7000,
+        cooldown = 10,
+        coords = vec3(5609.77, -5653.08, 8.65), -- east shore
+        heading = 217.0,
+        prop = {
+            model = `prop_rock_4_c`, -- coral / rock cluster
+            heading = 217.0,
+        },
+        anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
+        blip = { enabled = false, sprite = 51, color = 5, label = 'Coral Powder' },
+    },
+    {
+        id = 'island_resin',
+        type = 'bench',
+        item = 'island_resin',
+        label = 'Tap Island Resin',
+        amount = { min = 5, max = 10 },
+        duration = 7500,
+        cooldown = 10,
+        coords = vec3(4924.14, -5271.69, 4.35), -- main dock
+        heading = 198.0,
+        prop = {
+            model = `prop_barrel_01a`, -- resin barrel
+            heading = 198.0,
+        },
+        anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
+        blip = { enabled = false, sprite = 51, color = 5, label = 'Island Resin' },
+    },
+    {
+        id = 'perico_capsules',
+        type = 'bench',
+        item = 'perico_capsules',
+        label = 'Collect Perico Capsules',
+        amount = { min = 5, max = 10 },
+        duration = 6500,
+        cooldown = 10,
+        coords = vec3(4517.43, -4531.98, 2.82), -- airstrip
+        heading = 287.0,
+        prop = {
+            model = `prop_box_wood05a`, -- crate of empty capsules
+            heading = 287.0,
+        },
+        anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+        blip = { enabled = false, sprite = 51, color = 5, label = 'Perico Capsules' },
+    },
 }

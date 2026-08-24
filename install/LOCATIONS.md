@@ -64,9 +64,26 @@ Recipes may still list baggies, acetone, cups, sprite, ice, etc. — supply thos
 | Black liquid extract | `prop_barrel_exp_01a` | `764.61, -2197.83, 20.78` |
 | Process | `bkr_prop_meth_table01a` | `1092.77, -154.72, 54.64` |
 
+## Island Pills (Cayo Perico)
+
+All five spots are on the island. Existing mainland coords are unchanged.
+
+| Step | Prop | Coords | Area |
+|------|------|--------|------|
+| Cayo leaves | `prop_plant_01a` | `5365.07, -5438.82, 47.83` | Crop fields |
+| Coral powder | `prop_rock_4_c` | `5609.77, -5653.08, 8.65` | East shore |
+| Island resin | `prop_barrel_01a` | `4924.14, -5271.69, 4.35` | Main dock |
+| Perico capsules | `prop_box_wood05a` | `4517.43, -4531.98, 2.82` | Airstrip |
+| Process | `prop_tool_bench02` | `5071.07, -4639.87, 2.11` | North dock |
+
 ## Combat stim effects
 
 Pink Energy, Honda Pills, and Black Lotus:
 - **+25% armor**
 - **45s infinite stamina**
+- **No screen effects**
+
+Island Pills:
+- **+40% armor**
+- **60s infinite stamina**
 - **No screen effects**
