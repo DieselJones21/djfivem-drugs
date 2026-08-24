@@ -232,6 +232,10 @@ lib.callback.register('djdrugs:server:completeSale', function(source, token)
         return false, 'Not enough product'
     end
 
+    if not Server.CanAddPayout(source, offer.moneyType, offer.total) then
+        return false, 'Payment failed'
+    end
+
     if not Server.RemoveItem(source, offer.item, offer.quantity) then
         return false, 'Could not remove product'
     end

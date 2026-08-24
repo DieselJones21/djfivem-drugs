@@ -10,7 +10,7 @@ Built for **QBX (`qbx_core`) + ox_lib + ox_target + ox_inventory**.
 - Harvest props at ingredient stations (3rd eye)
 - Processing benches for every drug
 - `/trap` street selling with chance-based haggling
-- Weed sells for **cash**; all other drugs sell for **black_money**
+- Weed sells for **cash** (QBX account); all other drugs sell for **black_money** (ox_inventory item)
 - Weed harvest field map blip (other drug spots stay unmarked)
 - **Island Pills** — Cayo Perico exclusive, $1800–$2800 dirty (highest pay)
 - Usable drug effects (armor / stamina — no screen FX on combat stims)
@@ -33,7 +33,10 @@ add_ace group.admin djdrugs.boost allow
 
 1. Drop into `resources/[local]/djfivem-drugs`
 2. Merge items from `install/ox_inventory_items.lua` into `ox_inventory/data/items.lua`
+   - Include `black_money` unless your inventory already has it (hard-drug sales pay this item)
 3. Restart / ensure the resource
+
+Hard-drug `/trap` sales add the `black_money` **item**, not a QBX money account. Stock QBX only has `cash` / `bank` / `crypto` — paying `black_money` through `qbx_core:AddMoney` is what caused **Payment failed**. To use a custom QBX account instead, add that name to `Config.FrameworkMoneyTypes`.
 
 ## Boost events
 
