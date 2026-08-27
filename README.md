@@ -34,7 +34,9 @@ add_ace group.admin djdrugs.boost allow
 1. Drop into `resources/[local]/djfivem-drugs`
 2. Merge items from `install/ox_inventory_items.lua` into `ox_inventory/data/items.lua`
    - Include `black_money` unless your inventory already has it (hard-drug sales pay this item)
-3. Restart / ensure the resource
+3. Copy every PNG from `install/images/` into `ox_inventory/web/images/`
+   (filenames match item names, e.g. `island_pills.png`). `black_money` is not included — ox_inventory already ships it.
+4. Restart / ensure the resource
 
 Hard-drug `/trap` sales add the `black_money` **item**, not a QBX money account. Stock QBX only has `cash` / `bank` / `crypto` — paying `black_money` through `qbx_core:AddMoney` is what caused **Payment failed**. To use a custom QBX account instead, add that name to `Config.FrameworkMoneyTypes`.
 

@@ -5,6 +5,8 @@
       server = { export = 'djfivem-drugs.useDrugServer' }
 
     Change the folder name in the export if your resource folder differs.
+
+    Inventory icons: copy install/images/<item>.png into ox_inventory/web/images/
 ]]
 
 local drugUse = {
