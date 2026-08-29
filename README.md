@@ -13,7 +13,9 @@ Built for **QBX (`qbx_core`) + ox_lib + ox_target + ox_inventory**.
 - Weed sells for **cash** (QBX account); all other drugs sell for **black_money** (ox_inventory item)
 - Weed harvest field map blip (other drug spots stay unmarked)
 - **Island Pills** — Cayo Perico exclusive, $1800–$2800 dirty (highest pay)
-- Usable drug effects (armor / stamina — no screen FX on combat stims)
+- **Rebel Rolls** — Paleto Bay ecstasy, speed + stamina, Honda-level pay
+- Usable drug effects (armor / stamina / sprint — no screen FX on combat stims)
+- **Sell ranks + leaderboard** (`/drugboard`) — 5 levels from Runner to Kingpin
 - **Admin boost events** (`/drugboost`) — 2x/3x/4x sell and/or harvest for timed events
 
 ## Dependencies
@@ -64,8 +66,11 @@ Permission: ACE `djdrugs.boost` **or** QBX `admin`/`god` (see `Config.Boost`).
 | **Stab Juice** | stab powder + stab candy + concentrated juice | $500–$850 | black_money |
 | **Black Lotus** | lotus powder + black liquid extract | $500–$850 | black_money |
 | **Island Pills** | cayo leaf + coral powder + island resin + perico capsules | $1800–$2800 | black_money |
+| **Rebel Rolls** | rebel crystals + neon dye + pill binder + dove stamps | $500–$850 | black_money |
 
 All **Island Pills** harvest + process benches are on **Cayo Perico** (airstrip, docks, crop fields, east shore). The island must be streamed on your server (`bob74_ipl` or equivalent). Existing Los Santos spots are unchanged.
+
+All **Rebel Rolls** harvest + process benches are in **Paleto Bay**.
 
 ## Combat stim effects
 
@@ -78,6 +83,25 @@ All **Island Pills** harvest + process benches are on **Cayo Perico** (airstrip,
 - **+40% armor**
 - **60 seconds infinite stamina**
 - **No screen effects**
+
+**Rebel Rolls** (Paleto ecstasy):
+- **1.35x sprint speed** (GTA caps at 1.49)
+- **45 seconds infinite stamina**
+- **No screen effects / armor**
+
+## Sell ranks + leaderboard
+
+`/trap` sales count toward a 5-rank grind (`Config.Progression`). Open **`/drugboard`** for your rank and the top 10 sellers.
+
+| Rank | Units sold | Pay bonus |
+|------|------------|-----------|
+| 1 Runner | 0 | — |
+| 2 Hustler | 250 | +3% |
+| 3 Plug | 800 | +6% |
+| 4 Trap Star | 2,000 | +10% |
+| 5 Kingpin | 4,500 | +15% |
+
+Kingpin is a long grind (on the order of 60–90 hours of mixed harvest → process → sell). Progress is stored in resource KVP (no database).
 
 Finished drugs need:
 ```lua

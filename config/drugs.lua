@@ -10,6 +10,10 @@
     Island Pills (Cayo Perico exclusive):
       40% armor + 60s infinite stamina — no screen FX
       4 ingredients, all harvest + process spots on the island
+
+    Rebel Rolls (Paleto Bay ecstasy):
+      45s infinite stamina + 1.35x sprint — no screen FX
+      4 ingredients, all harvest + process spots in Paleto Bay
 ]]
 
 -- Shared combat stim (armor + stamina only)
@@ -400,6 +404,55 @@ Config.Drugs = {
             armorPercent = 40,
             stamina = true,
             -- no screen FX
+        },
+    },
+
+    --------------------------------------------------
+    -- Rebel Rolls (Paleto Bay ecstasy)
+    --------------------------------------------------
+    rebel_rolls = {
+        label = 'Rebel Rolls',
+        item = 'rebel_rolls',
+        description = 'Pressed rebel ecstasy — speed + stamina, no screen FX',
+        ingredients = {
+            { item = 'rebel_crystals', amount = 5 },
+            { item = 'neon_dye', amount = 5 },
+            { item = 'pill_binder', amount = 5 },
+            { item = 'dove_stamps', amount = 5 },
+        },
+        process = {
+            label = 'Press Rebel Rolls',
+            coords = vec3(-414.89, 6173.55, 31.48), -- west Paleto lots
+            heading = 140.0,
+            duration = 12000,
+            prop = {
+                model = `prop_tool_bench02`,
+                heading = 140.0,
+            },
+            anim = {
+                dict = 'mini@repair',
+                clip = 'fixing_a_ped',
+            },
+            output = { item = 'rebel_rolls', amount = 7 },
+            blip = { enabled = false, sprite = 51, color = 27, label = 'Rebel Press' },
+        },
+        sell = {
+            enabled = true,
+            moneyType = 'black_money',
+            minPrice = 500,
+            maxPrice = 850,
+            minQty = 1,
+            maxQty = 6,
+        },
+        effects = {
+            enabled = true,
+            label = 'Popping Rebel Rolls',
+            useTime = 3000,
+            duration = 45000,
+            anim = { dict = 'mp_player_inteat@burger', clip = 'mp_player_int_eat_burger', flag = 49 },
+            stamina = true,
+            sprintMultiplier = 1.35, -- GTA caps at 1.49; stamina already never drains
+            -- no armor / timecycle / screenEffect / shake
         },
     },
 }
