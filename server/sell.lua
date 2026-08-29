@@ -100,8 +100,9 @@ lib.callback.register('djdrugs:server:createOffer', function(source)
     local quantity = math.random(minAsk, maxAsk)
     local haggle = Config.Trap.haggle or {}
     local mult = Boost.GetSellMultiplier()
-    local minPrice = math.floor((sell.minPrice * mult) + 0.5)
-    local maxPrice = math.floor((sell.maxPrice * mult) + 0.5)
+    local rankMult = Progress.GetPayoutMultiplier(source)
+    local minPrice = math.floor((sell.minPrice * mult * rankMult) + 0.5)
+    local maxPrice = math.floor((sell.maxPrice * mult * rankMult) + 0.5)
     local priceEach = biasedPrice(minPrice, maxPrice, haggle.openingBias or 0.35)
     priceEach = math.max(minPrice, math.min(maxPrice, priceEach))
     local total = priceEach * quantity
@@ -123,6 +124,7 @@ lib.callback.register('djdrugs:server:createOffer', function(source)
         maxPrice = maxPrice,
         moneyType = moneyType,
         boostMultiplier = mult,
+        rankMultiplier = rankMult,
         attempts = 0,
         maxAttempts = haggle.maxAttempts or 2,
         haggleEnabled = haggle.enabled ~= false,
@@ -247,6 +249,11 @@ lib.callback.register('djdrugs:server:completeSale', function(source, token)
 
     Server.offers[source] = nil
 
+    local leveled, rank = Progress.RecordSale(source, offer.quantity, offer.total)
+    if leveled and rank then
+        Server.Notify(source, ('Rank up — %s (Level %s)'):format(rank.label, rank.level), 'success')
+    end
+
     if Config.Police.enabled and (Config.Police.alertChance or 0) > 0 then
         if math.random(1, 100) <= Config.Police.alertChance then
             Utils.Debug('police alert rolled for', source)
@@ -254,12 +261,16 @@ lib.callback.register('djdrugs:server:completeSale', function(source, token)
     end
 
     local dirty = offer.moneyType and offer.moneyType ~= (Config.MoneyType or 'cash')
-    return true, ('Sold %sx %s for $%s ($%s each)%s%s'):format(
+    local rankNote = (offer.rankMultiplier and offer.rankMultiplier > 1)
+        and (' [%sx rank]'):format(offer.rankMultiplier)
+        or ''
+    return true, ('Sold %sx %s for $%s ($%s each)%s%s%s'):format(
         offer.quantity,
         offer.label,
         offer.total,
         offer.priceEach,
         dirty and ' (dirty)' or '',
-        (offer.boostMultiplier and offer.boostMultiplier > 1) and (' [%sx boost]'):format(offer.boostMultiplier) or ''
+        (offer.boostMultiplier and offer.boostMultiplier > 1) and (' [%sx boost]'):format(offer.boostMultiplier) or '',
+        rankNote
     )
 end)

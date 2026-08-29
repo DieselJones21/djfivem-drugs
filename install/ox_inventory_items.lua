@@ -211,6 +211,36 @@ return {
         description = 'Empty capsules for pressing Island Pills',
     },
 
+    -- Ingredients: Rebel Rolls (Paleto Bay)
+    ['rebel_crystals'] = {
+        label = 'Rebel Crystals',
+        weight = 40,
+        stack = true,
+        close = true,
+        description = 'Raw crystals for pressing Rebel Rolls',
+    },
+    ['neon_dye'] = {
+        label = 'Neon Dye',
+        weight = 45,
+        stack = true,
+        close = true,
+        description = 'Bright dye for coloring Rebel Rolls',
+    },
+    ['pill_binder'] = {
+        label = 'Pill Binder',
+        weight = 35,
+        stack = true,
+        close = true,
+        description = 'Starch binder used to press Rebel Rolls',
+    },
+    ['dove_stamps'] = {
+        label = 'Dove Stamps',
+        weight = 20,
+        stack = true,
+        close = true,
+        description = 'Press dies stamped with a dove for Rebel Rolls',
+    },
+
     -- Finished products (usable)
     ['pink_energy'] = {
         label = 'Pink Energy',
@@ -274,6 +304,14 @@ return {
         stack = true,
         close = true,
         description = 'Cayo exclusive — 40% armor + 60s stamina',
+        server = drugUse,
+    },
+    ['rebel_rolls'] = {
+        label = 'Rebel Rolls',
+        weight = 25,
+        stack = true,
+        close = true,
+        description = 'Paleto ecstasy — 1.35x sprint + 45s stamina',
         server = drugUse,
     },
 }

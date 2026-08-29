@@ -76,6 +76,18 @@ All five spots are on the island. Existing mainland coords are unchanged.
 | Perico capsules | `prop_box_wood05a` | `4517.43, -4531.98, 2.82` | Airstrip |
 | Process | `prop_tool_bench02` | `5071.07, -4639.87, 2.11` | North dock |
 
+## Rebel Rolls (Paleto Bay)
+
+All five spots are in Paleto Bay. Existing coords are unchanged.
+
+| Step | Prop | Coords | Area |
+|------|------|--------|------|
+| Rebel crystals | `prop_rock_4_c` | `-319.55, 6084.12, 31.45` | SW Paleto woods |
+| Neon dye | `prop_barrel_01a` | `-70.41, 6266.04, 31.21` | Cluckin Bell |
+| Pill binder | `prop_feed_sack_01` | `-145.38, 6304.51, 31.56` | Paleto alley |
+| Dove stamps | `prop_box_wood05a` | `-213.47, 6556.18, 10.99` | North beach |
+| Process | `prop_tool_bench02` | `-414.89, 6173.55, 31.48` | West Paleto lots |
+
 ## Combat stim effects
 
 Pink Energy, Honda Pills, and Black Lotus:
@@ -86,4 +98,8 @@ Pink Energy, Honda Pills, and Black Lotus:
 Island Pills:
 - **+40% armor**
 - **60s infinite stamina**
+- **No screen effects**
+
+Rebel Rolls:
+- **1.35x sprint + 45s infinite stamina**
 - **No screen effects**

@@ -151,6 +151,26 @@ Config.Boost = {
     defaultDuration = 60 * 60, -- 1 hour
 }
 
+--[[
+    Street-sell ranks + leaderboard (units sold via /trap).
+    Thresholds are lifetime units — max rank is a long grind
+    (~60–90 hours of mixed harvest/process/sell at a typical pace).
+]]
+Config.Progression = {
+    enabled = true,
+    command = 'drugboard',
+    description = 'Open drug sell leaderboard and your rank',
+    leaderboardSize = 10,
+    -- sold = lifetime units required to REACH this rank
+    levels = {
+        { level = 1, sold = 0,    label = 'Runner',    payoutMultiplier = 1.00 },
+        { level = 2, sold = 250,  label = 'Hustler',   payoutMultiplier = 1.03 },
+        { level = 3, sold = 800,  label = 'Plug',      payoutMultiplier = 1.06 },
+        { level = 4, sold = 2000, label = 'Trap Star', payoutMultiplier = 1.10 },
+        { level = 5, sold = 4500, label = 'Kingpin',   payoutMultiplier = 1.15 },
+    },
+}
+
 -- Convenience / hardware store supply grabs — disabled (no store ingredient gathering).
 -- Example entry shape if you re-enable later:
 -- {
@@ -529,5 +549,77 @@ Config.Harvest = {
         },
         anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
         blip = { enabled = false, sprite = 51, color = 5, label = 'Perico Capsules' },
+    },
+
+    --------------------------------------------------
+    -- Rebel Rolls ingredients (Paleto Bay only)
+    --------------------------------------------------
+    {
+        id = 'rebel_crystals',
+        type = 'bench',
+        item = 'rebel_crystals',
+        label = 'Harvest Rebel Crystals',
+        amount = { min = 5, max = 10 },
+        duration = 7000,
+        cooldown = 10,
+        coords = vec3(-319.55, 6084.12, 31.45), -- SW Paleto woods
+        heading = 50.0,
+        prop = {
+            model = `prop_rock_4_c`, -- crystal cluster
+            heading = 50.0,
+        },
+        anim = { dict = 'amb@world_human_gardener_plant@male@base', clip = 'base' },
+        blip = { enabled = false, sprite = 51, color = 27, label = 'Rebel Crystals' },
+    },
+    {
+        id = 'neon_dye',
+        type = 'bench',
+        item = 'neon_dye',
+        label = 'Siphon Neon Dye',
+        amount = { min = 5, max = 10 },
+        duration = 6500,
+        cooldown = 10,
+        coords = vec3(-70.41, 6266.04, 31.21), -- Cluckin Bell Paleto
+        heading = 40.0,
+        prop = {
+            model = `prop_barrel_01a`, -- dye barrel
+            heading = 40.0,
+        },
+        anim = { dict = 'anim@amb@business@coc@coc_unpack_cut@', clip = 'fullcut_cycle_v6_cokecutter' },
+        blip = { enabled = false, sprite = 51, color = 27, label = 'Neon Dye' },
+    },
+    {
+        id = 'pill_binder',
+        type = 'bench',
+        item = 'pill_binder',
+        label = 'Scoop Pill Binder',
+        amount = { min = 5, max = 10 },
+        duration = 6000,
+        cooldown = 10,
+        coords = vec3(-145.38, 6304.51, 31.56), -- Paleto alley
+        heading = 225.0,
+        prop = {
+            model = `prop_feed_sack_01`, -- binder sack
+            heading = 225.0,
+        },
+        anim = { dict = 'amb@prop_human_parking_meter@male@idle_a', clip = 'idle_a' },
+        blip = { enabled = false, sprite = 51, color = 27, label = 'Pill Binder' },
+    },
+    {
+        id = 'dove_stamps',
+        type = 'bench',
+        item = 'dove_stamps',
+        label = 'Collect Dove Stamps',
+        amount = { min = 5, max = 10 },
+        duration = 6500,
+        cooldown = 10,
+        coords = vec3(-213.47, 6556.18, 10.99), -- Paleto north beach
+        heading = 85.0,
+        prop = {
+            model = `prop_box_wood05a`, -- crate of press dies
+            heading = 85.0,
+        },
+        anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+        blip = { enabled = false, sprite = 51, color = 27, label = 'Dove Stamps' },
     },
 }

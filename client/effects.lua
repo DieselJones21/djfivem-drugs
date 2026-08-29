@@ -103,6 +103,10 @@ function Effects.Apply(drugId, effect)
             if effect.stamina then
                 RestorePlayerStamina(playerId, 1.0)
             end
+            -- Re-apply sprint boost; some frameworks reset the multiplier
+            if effect.sprintMultiplier and effect.sprintMultiplier > 1.0 then
+                SetRunSprintMultiplierForPlayer(playerId, math.min(1.49, effect.sprintMultiplier))
+            end
             Wait(1000)
         end
 

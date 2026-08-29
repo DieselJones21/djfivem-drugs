@@ -14,6 +14,30 @@ function Bridge.GetPlayers()
     return exports.qbx_core:GetQBPlayers()
 end
 
+function Bridge.GetCharacter(src)
+    local player = Bridge.GetPlayer(src)
+    local pd = player and player.PlayerData
+    if not pd or not pd.citizenid then
+        return nil
+    end
+
+    local name = 'Unknown'
+    local info = pd.charinfo
+    if type(info) == 'table' then
+        local first = info.firstname or ''
+        local last = info.lastname or ''
+        name = (first .. ' ' .. last):gsub('^%s+', ''):gsub('%s+$', '')
+        if name == '' then
+            name = 'Unknown'
+        end
+    end
+
+    return {
+        citizenid = pd.citizenid,
+        name = name,
+    }
+end
+
 function Bridge.AddMoney(src, moneyType, amount, reason)
     return exports.qbx_core:AddMoney(src, moneyType, amount, reason or 'djdrugs')
 end
